@@ -1,0 +1,53 @@
+{
+  "name": "food",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:v1": "vitest src/v1/index.spec.ts",
+    "test:v2": "vitest src/v2/index.spec.ts",
+    "test:v3": "vitest src/v3/index.spec.ts",
+    "test:v4": "vitest src/v4/index.spec.ts",
+    "test:v5": "vitest src/v5/index.spec.ts",
+    "test:v5.1": "vitest src/v5.1/index.spec.ts",
+    "test:v6": "vitest src/v6/index.spec.ts",
+    "test:v7": "vitest src/v7/index.spec.ts",
+    "test:v8": "vitest src/v8/index.spec.ts",
+    "test:v9": "vitest src/v9/index.spec.ts",
+    "test:v10": "vitest src/v10/index.spec.ts",
+    "test:v11": "vitest src/v11/index.spec.ts",
+    "dev:v1": "nodemon src/v1/index.ts",
+    "dev:v2": "nodemon src/v2/index.ts",
+    "dev:v3": "nodemon src/v3/index.ts",
+    "dev:v4": "nodemon src/v4/index.ts",
+    "dev:v5": "nodemon src/v5/index.ts",
+    "dev:v5.1": "nodemon src/v5.1/index.ts",
+    "dev:v6": "nodemon src/v6/index.ts",
+    "dev:v7": "nodemon src/v7/index.ts",
+    "dev:v8": "nodemon src/v8/index.ts",
+    "dev:v9": "nodemon src/v9/index.ts",
+    "dev:v10": "nodemon src/v10/index.ts",
+    "dev:v11": "nodemon src/v11/index.ts",
+    "db": "json-server --watch database/db.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "4.17.17",
+    "axios": "1.5.0",
+    "express": "4.18.2",
+    "jest": "29.6.4",
+    "json-server": "0.17.3",
+    "nodemon": "3.0.1",
+    "restify": "11.1.0",
+    "ts-jest": "29.1.1",
+    "ts-node": "10.9.1",
+    "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/jest": "29.5.4",
+    "@types/restify": "8.5.7",
+    "vitest": "0.34.3"
+  }
+}

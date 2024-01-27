@@ -1,0 +1,6 @@
+{
+  "foods": [
+    { "id": "123", "name": "Macarronada", "price": 12.5 },
+    { "id": "123", "name": "File de frango", "price": 10 }
+  ]
+}
