@@ -23,6 +23,7 @@
     "test:v16": "vitest src/v16/index.spec.ts",
     "test:v17": "vitest src/v17/index.spec.ts",
     "test:v18": "vitest src/v18/index.spec.ts",
+    "test:v19": "vitest src/v19/index.spec.ts",
     "dev:v1": "nodemon src/v1/index.ts",
     "dev:v2": "nodemon src/v2/index.ts",
     "dev:v3": "nodemon src/v3/index.ts",
