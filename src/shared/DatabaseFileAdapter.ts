@@ -1,7 +1,7 @@
 import { readFileSync } from "fs"
 import { join } from "path"
-import IGetFoodsDatabase from "../v11/IGetFoodsDatabase"
-import { IFood } from "../v11/IRepository"
+import IGetFoodsDatabase from "../clean-arch-v2/IGetFoodsDatabase"
+import { IFood } from "../clean-arch-v2/IRepository"
 
 export default class DatabaseFileAdapter implements IGetFoodsDatabase {
   constructor() {}
