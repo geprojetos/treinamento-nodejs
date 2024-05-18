@@ -8,6 +8,7 @@
     "test:clean-arch-v2": "vitest src/clean-arch-v2/index.spec.ts",
     "test:clean-arch-v3": "vitest src/clean-arch-v3/index.spec.ts",
     "test:orchestration": "vitest src/orchestration/index.spec.ts",
+    "test:github-api": "vitest src/github-api/index.spec.ts",
     "test:todo-orchestration": "vitest src/todo-orchestration/index.spec.ts",
     "test:imc": "vitest src/imc/index.spec.ts",
     "test:bank": "vitest src/bank/index.spec.ts",
@@ -16,6 +17,7 @@
     "dev:clean-arch-v1": "nodemon src/clean-arch-v1/index.ts",
     "dev:clean-arch-v2": "nodemon src/clean-arch-v2/index.ts",
     "dev:clean-arch-v3": "nodemon src/clean-arch-v3/index.ts",
+    "dev:github-api": "nodemon src/github-api/index.ts",
     "dev:pubsub": "nodemon src/pubsub/index.ts",
     "dev:notification": "nodemon src/notification/index.ts",
     "db": "json-server --watch database/db.json",
@@ -39,6 +41,8 @@
   "devDependencies": {
     "@types/jest": "29.5.4",
     "@types/restify": "8.5.7",
+    "@types/supertest": "6.0.2",
+    "supertest": "7.0.0",
     "vitest": "0.34.3"
   }
 }
