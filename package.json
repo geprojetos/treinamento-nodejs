@@ -12,6 +12,7 @@
     "test:todo-orchestration": "vitest src/todo-orchestration/index.spec.ts",
     "test:imc": "vitest src/imc/index.spec.ts",
     "test:bank": "vitest src/bank/index.spec.ts",
+    "test:portsAndAdapters": "vitest src/portsAndAdapters/index.spec.ts",
     "test:notification": "vitest src/notification/index.spec.ts",
     "test:todo-actions": "vitest src/todo-actions/index.spec.ts",
     "dev:clean-arch-v1": "nodemon src/clean-arch-v1/index.ts",
@@ -20,6 +21,7 @@
     "dev:github-api": "tsx watch src/github-api/index.ts",
     "dev:pubsub": "nodemon src/pubsub/index.ts",
     "dev:notification": "nodemon src/notification/index.ts",
+    "dev:portsAndAdapters": "nodemon src/portsAndAdapters/1_drivers/index.ts",
     "db": "json-server --watch database/db.json",
     "db:users": "json-server --watch database/users.json"
   },

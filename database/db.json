@@ -2,5 +2,10 @@
   "foods": [
     { "id": "123", "name": "Macarronada", "price": 12.5 },
     { "id": "123", "name": "File de frango", "price": 10 }
+  ],
+  "example": [
+    { "id": "1", "name": "Macarronada", "price": 12.5, "category": "snack" },
+    { "id": "2", "name": "File de frango", "price": 10, "category": "snack" },
+    { "id": "3", "name": "Sorvete", "price": 20, "category": "dessert" }
   ]
 }
