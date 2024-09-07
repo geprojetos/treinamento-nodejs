@@ -1,5 +1,5 @@
 import TodoMemory from "database/todo-memory"
-import useTodo, { IUseTodo } from "./"
+import useTodo, { IUseTodo } from "."
 import { IAddTodo } from "./add"
 
 describe("[integration] TODO ACTIONS - ADD", () => {
