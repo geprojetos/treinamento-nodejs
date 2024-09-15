@@ -3,6 +3,7 @@ import { IHttpClient } from "../adapters/HttpClientAxiosAdapter"
 export interface IDatabase {
   getFoods(): Promise<any>
   createFood(input: any): Promise<any>
+  deleteFood(input: any): Promise<any>
 }
 
 class FoodsDatabase implements IDatabase {
@@ -10,6 +11,11 @@ class FoodsDatabase implements IDatabase {
 
   constructor(private _httpClient: IHttpClient) {
     this._baseUrl = "http://localhost:3000/foods-v2"
+  }
+
+  async deleteFood(input: any): Promise<any> {
+    const response = await this._httpClient.delete(this._baseUrl, input)
+    return response
   }
 
   async createFood(input: any): Promise<any> {

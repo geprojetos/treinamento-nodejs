@@ -3,6 +3,7 @@ import express, { Express } from "express"
 interface IServerClient {
   get(url: string, callback: (req: any, res: any) => Promise<any>): void
   post(url: string, callback: (req: any, res: any) => Promise<any>): void
+  delete(url: string, callback: (req: any, res: any) => Promise<any>): void
   listen(port: number, callback: () => void): void
 }
 
@@ -14,6 +15,17 @@ class ServerClientExpressAdapter implements IServerClient {
     this.app = express()
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
+  }
+
+  delete(url: string, callback: (req: any, res: any) => Promise<any>): void {
+    try {
+      this.app.delete(url, async (req, res) => {
+        const output = await callback(req, req)
+        res.json(output)
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
   post(url: string, callback: (req: any, res: any) => Promise<any>): void {

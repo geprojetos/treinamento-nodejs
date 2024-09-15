@@ -35,7 +35,7 @@ class CreateFoodsApplication {
 
     const output = {
       message: "Success",
-      status: "200",
+      status: "201",
       data: response,
     }
     return output

@@ -6,6 +6,8 @@ import { IHttpClient } from "./3_resources/adapters/HttpClientAxiosAdapter"
 import ServerClientExpressAdapter from "./1_drivers/adapters/ServerClientExpressAdapter"
 import CreateFoodsApplication from "./2_application/createFoods"
 import CreateFoodsController from "./1_drivers/createFoods/CreateFoodsController"
+import DeleteFoodsApplication from "./2_application/deleteFoods"
+import DeleteFoodsController from "./1_drivers/deleteFoods/DeleteFoodsController"
 
 class HttpClientMemory implements IHttpClient {
   foods: any
@@ -21,6 +23,14 @@ class HttpClientMemory implements IHttpClient {
   async post(url: string, input: any): Promise<any> {
     this.foods.push(input)
     return this.foods
+  }
+
+  async delete(url: string, input: any): Promise<any> {
+    this.foods.filter((food: any) => food.id !== input.id)
+    return {
+      message: "OK",
+      status: "200",
+    }
   }
 }
 
@@ -103,7 +113,7 @@ describe("CreateFoods", () => {
     const data = response.body
     const output = {
       message: "Success",
-      status: "200",
+      status: "201",
       data: [{ name: "Contra filé", price: 20, category: "main" }],
     }
     expect(data).toEqual(output)
@@ -149,6 +159,50 @@ describe("CreateFoods", () => {
     const data = response.body
     const output = {
       message: "Category is required",
+      status: "400",
+    }
+    expect(data).toEqual(output)
+  })
+})
+
+describe("DeleteFoods", () => {
+  let app: any
+
+  beforeAll(() => {
+    const httpClient = new HttpClientMemory()
+    const database = new FoodsDatabase(httpClient)
+    const application = new DeleteFoodsApplication(database)
+    const serverClient = ServerClientExpressAdapter.getInstance()
+    const controller = new DeleteFoodsController(application, serverClient)
+    controller.execute()
+    app = serverClient.app
+  })
+
+  test("Should be able error delete food id is required", async () => {
+    const response = await supertest(app)
+      .delete("/foods")
+      .send({ id: "test" })
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+
+    const data = response.body
+    const output = {
+      message: "OK",
+      status: "200",
+    }
+    expect(data).toEqual(output)
+  })
+
+  test("Should be able error delete food id is required", async () => {
+    const response = await supertest(app)
+      .delete("/foods")
+      .send({ id: "" })
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json")
+
+    const data = response.body
+    const output = {
+      message: "ID is required",
       status: "400",
     }
     expect(data).toEqual(output)
