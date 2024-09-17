@@ -7,24 +7,20 @@ export interface IDatabase {
 }
 
 class FoodsDatabase implements IDatabase {
-  private _baseUrl
-
-  constructor(private _httpClient: IHttpClient) {
-    this._baseUrl = "http://localhost:3000/foods-v2"
-  }
+  constructor(private _httpClient: IHttpClient) {}
 
   async deleteFood(input: any): Promise<any> {
-    const response = await this._httpClient.delete(this._baseUrl, input)
+    const response = await this._httpClient.delete(input)
     return response
   }
 
   async createFood(input: any): Promise<any> {
-    const response = await this._httpClient.post(this._baseUrl, input)
+    const response = await this._httpClient.post(input)
     return response
   }
 
   async getFoods() {
-    const response = await this._httpClient.get(this._baseUrl)
+    const response = await this._httpClient.get()
     return response
   }
 }

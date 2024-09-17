@@ -4,7 +4,7 @@ import CreateFoodsController from "./CreateFoodsController"
 import ServerClientExpressAdapter from "../adapters/ServerClientExpressAdapter"
 import CreateFoodsApplication from "../../2_application/createFoods"
 
-const httpClient = new HttpClientAxiosAdapter()
+const httpClient = HttpClientAxiosAdapter.getInstance()
 const database = new FoodsDatabase(httpClient)
 const application = new CreateFoodsApplication(database)
 const serverClient = ServerClientExpressAdapter.getInstance()

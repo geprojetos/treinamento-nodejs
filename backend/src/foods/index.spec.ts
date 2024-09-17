@@ -16,16 +16,16 @@ class HttpClientMemory implements IHttpClient {
     this.foods = []
   }
 
-  async get(url: string): Promise<any> {
+  async get(): Promise<any> {
     return this.foods
   }
 
-  async post(url: string, input: any): Promise<any> {
+  async post(input: any): Promise<any> {
     this.foods.push(input)
     return this.foods
   }
 
-  async delete(url: string, input: any): Promise<any> {
+  async delete(input: any): Promise<any> {
     this.foods.filter((food: any) => food.id !== input.id)
     return {
       message: "OK",
@@ -39,7 +39,7 @@ describe("GetFoods", () => {
 
   beforeAll(() => {
     const httpClient: IHttpClient = {
-      get: async (url: string): Promise<any> => {
+      get: async (): Promise<any> => {
         return [
           { id: "1", name: "Macarronada", price: 12.5, category: "main" },
           { id: "2", name: "File de frango", price: 10, category: "main" },
