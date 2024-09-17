@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios"
+import LoggerPinoAdapter, { ILogger } from "./LoggerPinoAdapter"
 
 interface IHttpClient {
   get?(): Promise<any>
@@ -8,11 +9,10 @@ interface IHttpClient {
 
 class HttpClientAxiosAdapter implements IHttpClient {
   private _baseUrl
-
-  static instance: HttpClientAxiosAdapter
   private _axios: AxiosInstance
+  static instance: HttpClientAxiosAdapter
 
-  private constructor() {
+  private constructor(private _logger: ILogger) {
     this._baseUrl = "http://localhost:3000/foods-v2"
     this._axios = axios.create({ baseURL: this._baseUrl })
     this._interceptor()
@@ -52,7 +52,7 @@ class HttpClientAxiosAdapter implements IHttpClient {
         method: request.method,
         params: request.params,
       }
-      console.log("request", JSON.stringify(logs))
+      this._logger.info(logs)
       return request
     })
 
@@ -61,14 +61,16 @@ class HttpClientAxiosAdapter implements IHttpClient {
         baseURL: response.config.baseURL,
         data: response.data,
       }
-      console.log("response", JSON.stringify(logs))
+      this._logger.info(logs)
       return response
     })
   }
 
   public static getInstance(): HttpClientAxiosAdapter {
     if (!HttpClientAxiosAdapter.instance) {
-      HttpClientAxiosAdapter.instance = new HttpClientAxiosAdapter()
+      HttpClientAxiosAdapter.instance = new HttpClientAxiosAdapter(
+        new LoggerPinoAdapter()
+      )
     }
     return HttpClientAxiosAdapter.instance
   }
