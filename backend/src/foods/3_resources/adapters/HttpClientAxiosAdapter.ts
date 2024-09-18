@@ -45,25 +45,34 @@ class HttpClientAxiosAdapter implements IHttpClient {
   }
 
   private _interceptor = () => {
-    this._axios.interceptors.request.use((request) => {
-      const logs = {
-        baseUrl: request.baseURL,
-        headers: request.headers,
-        method: request.method,
-        params: request.params,
+    this._axios.interceptors.request.use(
+      (request) => {
+        const logs = {
+          baseUrl: request.baseURL,
+          headers: request.headers,
+          method: request.method,
+          params: request.params,
+        }
+        this._logger.info({ Request: logs })
+        return request
+      },
+      (error) => {
+        this._logger.error(error.message)
       }
-      this._logger.info(logs)
-      return request
-    })
+    )
 
-    this._axios.interceptors.response.use((response) => {
-      const logs = {
-        baseURL: response.config.baseURL,
-        data: response.data,
+    this._axios.interceptors.response.use(
+      (response) => {
+        const logs = {
+          data: response.data,
+        }
+        this._logger.info({ Response: logs })
+        return response
+      },
+      (error) => {
+        this._logger.error(error.message)
       }
-      this._logger.info(logs)
-      return response
-    })
+    )
   }
 
   public static getInstance(): HttpClientAxiosAdapter {
