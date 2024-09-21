@@ -1,9 +1,14 @@
+import { vitest } from "vitest"
 import Gateway from "../../infra/Gateway"
 import { IHttpClient } from "../../infra/HttpAxiosAdapterClient"
 import UseCreateFood, { ICreateFood } from "./UseCreateFood"
 import UseDeleteFood, { IDeleteFood } from "./UseDeleteFood"
 import UseGetAllFoods from "./UseGetAllFoods"
 import UseGetOnlyFood, { IGetOnlyFood } from "./UseGetOnlyFood"
+import UseNavigateDetailFood, {
+  IUseNavigateDetailFood,
+  IUseNavigateDetailFoodParams,
+} from "./UseNavigateDetailFood"
 
 let httpClient: IHttpClient
 let gateway: Gateway
@@ -204,5 +209,23 @@ describe("UseDeleteFood", () => {
       message: "ID is required",
     }
     expect(response).toEqual(output)
+  })
+})
+
+describe("UseNavigateDetailFood", () => {
+  test("Should be able navigate detail food", async () => {
+    const useCase = new UseNavigateDetailFood()
+    const spyUseCase = vitest.spyOn(useCase, "execute")
+    const input: IUseNavigateDetailFood = {
+      params: {
+        id: "1",
+        name: "Macarronada",
+        price: 12.5,
+        category: "main",
+      },
+      callback: (params: IUseNavigateDetailFoodParams) => null,
+    }
+    useCase.execute(input)
+    expect(spyUseCase).toHaveBeenCalledWith(input)
   })
 })
