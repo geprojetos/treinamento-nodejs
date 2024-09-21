@@ -1,4 +1,5 @@
 import express, { Express } from "express"
+import cors from "cors"
 
 interface IServerClient {
   get(url: string, callback: (req: any, res: any) => Promise<any>): void
@@ -15,6 +16,7 @@ class ServerClientExpressAdapter implements IServerClient {
     this.app = express()
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
+    this.app.use(cors())
   }
 
   delete(url: string, callback: (req: any, res: any) => Promise<any>): void {
