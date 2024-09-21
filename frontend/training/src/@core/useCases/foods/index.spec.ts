@@ -1,13 +1,9 @@
-import Gateway, {
-  ICreateFood,
-  IDeleteFood,
-  IGetOnlyFood,
-} from "../../infra/Gateway"
+import Gateway from "../../infra/Gateway"
 import { IHttpClient } from "../../infra/HttpAxiosAdapterClient"
-import UseCreateFood from "./UseCreateFood"
-import UseDeleteFood from "./UseDeleteFood"
+import UseCreateFood, { ICreateFood } from "./UseCreateFood"
+import UseDeleteFood, { IDeleteFood } from "./UseDeleteFood"
 import UseGetAllFoods from "./UseGetAllFoods"
-import UseGetOnlyFood from "./UseGetOnlyFood"
+import UseGetOnlyFood, { IGetOnlyFood } from "./UseGetOnlyFood"
 
 let httpClient: IHttpClient
 let gateway: Gateway
@@ -102,7 +98,7 @@ describe("UseGetAllFoods", () => {
 describe("UseGetOnlyFood", () => {
   test("Should be able get food for name", async () => {
     const useCase = new UseGetOnlyFood(gateway)
-    const response = await useCase.execute({ input: "1" })
+    const response = await useCase.execute({ id: "1" })
     const output = [
       {
         id: "1",
@@ -112,6 +108,15 @@ describe("UseGetOnlyFood", () => {
       },
     ]
     expect(response.data).toEqual(output)
+  })
+
+  test("Should be able error get food for name ID is required", async () => {
+    const useCase = new UseGetOnlyFood(gateway)
+    const response = await useCase.execute({ id: "" })
+    const output = {
+      message: "ID is required",
+    }
+    expect(response).toEqual(output)
   })
 })
 
@@ -131,6 +136,48 @@ describe("UseCreateFood", () => {
     }
     expect(response.data).toEqual(output)
   })
+
+  test("Should be able error create food name is required", async () => {
+    const useCase = new UseCreateFood(gateway)
+    const input = {
+      name: "",
+      price: 10,
+      category: "main",
+    }
+    const response = await useCase.execute(input)
+    const output = {
+      message: "Name is required",
+    }
+    expect(response).toEqual(output)
+  })
+
+  test("Should be able error create food price is required", async () => {
+    const useCase = new UseCreateFood(gateway)
+    const input = {
+      name: "test",
+      price: 0,
+      category: "main",
+    }
+    const response = await useCase.execute(input)
+    const output = {
+      message: "Price is required",
+    }
+    expect(response).toEqual(output)
+  })
+
+  test("Should be able error create food category is required", async () => {
+    const useCase = new UseCreateFood(gateway)
+    const input = {
+      name: "test",
+      price: 10,
+      category: "",
+    }
+    const response = await useCase.execute(input)
+    const output = {
+      message: "Category is required",
+    }
+    expect(response).toEqual(output)
+  })
 })
 
 describe("UseDeleteFood", () => {
@@ -145,5 +192,17 @@ describe("UseDeleteFood", () => {
       status: "200",
     }
     expect(response.data).toEqual(output)
+  })
+
+  test("Should be able error delete food ID is required", async () => {
+    const useCase = new UseDeleteFood(gateway)
+    const input = {
+      id: "",
+    }
+    const response = await useCase.execute(input)
+    const output = {
+      message: "ID is required",
+    }
+    expect(response).toEqual(output)
   })
 })

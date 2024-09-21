@@ -1,4 +1,8 @@
-import { IDeleteFood, IGateway } from "../../infra/Gateway"
+import { IGateway } from "../../infra/Gateway"
+
+interface IDeleteFood {
+  id: string
+}
 
 export default class UseDeleteFood {
   constructor(private _gateway: IGateway) {}
@@ -8,3 +12,5 @@ export default class UseDeleteFood {
     return response
   }
 }
+
+export type { IDeleteFood }

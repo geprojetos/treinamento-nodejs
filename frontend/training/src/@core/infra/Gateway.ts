@@ -1,3 +1,6 @@
+import { ICreateFood } from "../useCases/foods/UseCreateFood"
+import { IDeleteFood } from "../useCases/foods/UseDeleteFood"
+import { IGetOnlyFood } from "../useCases/foods/UseGetOnlyFood"
 import { IHttpClient } from "./HttpAxiosAdapterClient"
 
 interface IGateway {
@@ -7,24 +10,15 @@ interface IGateway {
   deleteFood(input: IDeleteFood): Promise<any>
 }
 
-interface IGetOnlyFood {
-  id: string
-}
-
-interface ICreateFood {
-  name: string
-  price: number
-  category: string
-}
-
-interface IDeleteFood {
-  id: string
-}
-
 export default class Gateway implements IGateway {
   constructor(private _httpClient: IHttpClient) {}
 
   async deleteFood(input: IDeleteFood): Promise<any> {
+    if (!input?.id) {
+      return {
+        message: "ID is required",
+      }
+    }
     const response = await this._httpClient.delete(input)
     return response
   }
@@ -35,6 +29,11 @@ export default class Gateway implements IGateway {
   }
 
   async getOnlyFood(input: IGetOnlyFood): Promise<any> {
+    if (!input?.id) {
+      return {
+        message: "ID is required",
+      }
+    }
     const response = await this._httpClient.getOnly(input)
     return response
   }
@@ -45,4 +44,4 @@ export default class Gateway implements IGateway {
   }
 }
 
-export type { IGateway, IGetOnlyFood, ICreateFood, IDeleteFood }
+export type { IGateway }
