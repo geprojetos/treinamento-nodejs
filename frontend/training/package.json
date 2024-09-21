@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 8080",
     "test:foods": "vitest src/@core/useCases/foods/index.spec.ts",
     "build": "next build",
     "start": "next start",
@@ -17,6 +17,7 @@
     "vitest": "2.1.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.2",
     "@types/jest": "29.5.13",
     "@types/node": "20",
     "@types/react": "18",

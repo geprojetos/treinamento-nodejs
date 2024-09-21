@@ -1,5 +1,7 @@
 import axios from "axios"
-import { ICreateFood, IDeleteFood, IGetOnlyFood } from "./Gateway"
+import { IGetOnlyFood } from "../useCases/foods/UseGetOnlyFood"
+import { ICreateFood } from "../useCases/foods/UseCreateFood"
+import { IDeleteFood } from "../useCases/foods/UseDeleteFood"
 
 export interface IHttpClient {
   get(): Promise<any>

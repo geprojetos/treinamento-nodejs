@@ -38,3 +38,5 @@ export default class Food {
     return !!Object.keys(this.error).length
   }
 }
+
+export type { IFood }
