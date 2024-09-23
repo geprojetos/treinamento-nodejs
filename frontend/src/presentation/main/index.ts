@@ -7,7 +7,7 @@ import {
   IUseNavigateDetailFoodParams,
 } from "../../@core/useCases/foods/UseNavigateDetailFood"
 
-const useGetAll = () => {
+const useGetAllPresentation = () => {
   const router = useRouter()
   const [foods, setFoods] = useState<IFood[]>([])
 
@@ -26,7 +26,9 @@ const useGetAll = () => {
       callback: () => {
         router.push({
           pathname: "details",
-          query: JSON.stringify(params),
+          query: {
+            ...params,
+          },
         })
       },
     }
@@ -39,4 +41,4 @@ const useGetAll = () => {
   }
 }
 
-export default useGetAll
+export default useGetAllPresentation
