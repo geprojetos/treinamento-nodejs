@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import { useGetAllFoods, useNavigateDetailFood } from "../../@core/index"
-import { IFood } from "../../@core/domain/Food"
+import { useGetAllFoods, useNavigateDetailFood } from "../../../@core/index"
+import { IFood } from "../../../@core/domain/Food"
 import { useRouter } from "next/router"
 import {
   IUseNavigateDetailFood,
   IUseNavigateDetailFoodParams,
-} from "../../@core/useCases/foods/UseNavigateDetailFood"
+} from "../../../@core/useCases/foods/UseNavigateDetailFood"
 
 const useGetAllPresentation = () => {
   const router = useRouter()

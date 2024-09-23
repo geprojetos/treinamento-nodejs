@@ -1,4 +1,4 @@
-import DetailsPresentation from "@/presentation/details"
+import DetailsPresentation from "@/presentation/foods/details"
 
 const DetailsView = () => {
   const { back, name, price, category } = DetailsPresentation()
