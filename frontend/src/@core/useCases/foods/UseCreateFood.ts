@@ -10,7 +10,7 @@ interface ICreateFood {
 export default class UseCreateFood {
   constructor(private _gateway: IGateway) {}
 
-  async execute(input: ICreateFood) {
+  async execute(input: ICreateFood, callBack?: () => void) {
     const food = new Food({
       name: input.name,
       price: input.price,
@@ -21,6 +21,9 @@ export default class UseCreateFood {
     }
 
     const response = await this._gateway.createFood(input)
+    if (response?.status === "201" && callBack) {
+      callBack()
+    }
     return response
   }
 }

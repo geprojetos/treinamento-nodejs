@@ -16,7 +16,7 @@ const geistMono = localFont({
 })
 
 const MainFoods = () => {
-  const { foods, navigateToDetail } = useGetAllPresentation()
+  const { foods, navigateToDetail, navigateToCreate } = useGetAllPresentation()
 
   return (
     <>
@@ -31,9 +31,9 @@ const MainFoods = () => {
       >
         <main className={styles.main}>
           <div className={styles.ctas}>
-            {foods.map((food) => {
+            {foods.map((food, index) => {
               return (
-                <section>
+                <section key={`list-${index}`}>
                   <h1>{food.name}</h1>
                   <p>{food.name}</p>
                   <p>{food.price}</p>
@@ -48,6 +48,7 @@ const MainFoods = () => {
               )
             })}
           </div>
+          <button onClick={navigateToCreate}>Adicionar</button>
         </main>
         <footer className={styles.footer}>
           <p>@Foods</p>

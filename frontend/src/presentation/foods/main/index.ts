@@ -35,9 +35,16 @@ const useGetAllPresentation = () => {
     useNavigateDetailFood.execute(input)
   }
 
+  const navigateToCreate = () => {
+    router.push({
+      pathname: "create",
+    })
+  }
+
   return {
     foods,
     navigateToDetail,
+    navigateToCreate,
   }
 }
 

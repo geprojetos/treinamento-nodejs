@@ -20,15 +20,15 @@ export default class Food {
 
   private _validate() {
     if (!this._name) {
-      this.error = { message: "Name is required" }
+      this.error = { name: "Name is required" }
       return
     }
     if (!this._price) {
-      this.error = { message: "Price is required" }
+      this.error = { price: "Price is required" }
       return
     }
     if (!this._category) {
-      this.error = { message: "Category is required" }
+      this.error = { category: "Category is required" }
       return
     }
     this.error = {}

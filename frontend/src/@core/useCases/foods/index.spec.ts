@@ -151,7 +151,7 @@ describe("UseCreateFood", () => {
     }
     const response = await useCase.execute(input)
     const output = {
-      message: "Name is required",
+      name: "Name is required",
     }
     expect(response).toEqual(output)
   })
@@ -165,7 +165,7 @@ describe("UseCreateFood", () => {
     }
     const response = await useCase.execute(input)
     const output = {
-      message: "Price is required",
+      price: "Price is required",
     }
     expect(response).toEqual(output)
   })
@@ -179,7 +179,7 @@ describe("UseCreateFood", () => {
     }
     const response = await useCase.execute(input)
     const output = {
-      message: "Category is required",
+      category: "Category is required",
     }
     expect(response).toEqual(output)
   })
