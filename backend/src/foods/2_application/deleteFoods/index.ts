@@ -4,8 +4,8 @@ class DeleteFoodsApplication {
   constructor(private _getFoodsDatabase: IDatabase) {}
 
   async execute(req: any): Promise<any> {
-    const { body } = req
-    const { id } = body
+    const { query } = req
+    const { id } = query
     const response = await this._getFoodsDatabase.deleteFood({
       id,
     })

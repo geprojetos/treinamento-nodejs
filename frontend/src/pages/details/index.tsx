@@ -1,7 +1,7 @@
 import DetailsPresentation from "@/presentation/foods/details"
 
 const DetailsView = () => {
-  const { back, name, price, category } = DetailsPresentation()
+  const { back, name, price, category, handleRemove } = DetailsPresentation()
 
   return (
     <>
@@ -9,6 +9,7 @@ const DetailsView = () => {
       <p>{price}</p>
       <p>{category}</p>
 
+      <button onClick={handleRemove}>Remover</button>
       <button onClick={back}>Voltar</button>
     </>
   )

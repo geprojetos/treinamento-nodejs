@@ -179,11 +179,7 @@ describe("DeleteFoods", () => {
   })
 
   test("Should be able error delete food id is required", async () => {
-    const response = await supertest(app)
-      .delete("/foods")
-      .send({ id: "test" })
-      .set("Content-Type", "application/json")
-      .set("Accept", "application/json")
+    const response = await supertest(app).delete("/foods").query({ id: "test" })
 
     const data = response.body
     const output = {
@@ -196,7 +192,7 @@ describe("DeleteFoods", () => {
   test("Should be able error delete food id is required", async () => {
     const response = await supertest(app)
       .delete("/foods")
-      .send({ id: "" })
+      .query({ id: "" })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
 

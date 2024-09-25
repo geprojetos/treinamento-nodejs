@@ -1,3 +1,4 @@
+import GatewayValidation from "../domain/GatewayValidation"
 import { ICreateFood } from "../useCases/foods/UseCreateFood"
 import { IDeleteFood } from "../useCases/foods/UseDeleteFood"
 import { IGetOnlyFood } from "../useCases/foods/UseGetOnlyFood"
@@ -15,9 +16,10 @@ export default class Gateway implements IGateway {
 
   async deleteFood(input: IDeleteFood): Promise<any> {
     if (!input?.id) {
-      return {
-        message: "ID is required",
-      }
+      return GatewayValidation.isValidDelete(input.id)
+    }
+    if (!input?.isConfirm) {
+      return GatewayValidation.isConfirmDelete(input.isConfirm!)
     }
     const response = await this._httpClient.delete(input)
     return response
@@ -30,9 +32,7 @@ export default class Gateway implements IGateway {
 
   async getOnlyFood(input: IGetOnlyFood): Promise<any> {
     if (!input?.id) {
-      return {
-        message: "ID is required",
-      }
+      return GatewayValidation.isValidDelete(input.id)
     }
     const response = await this._httpClient.getOnly(input)
     return response

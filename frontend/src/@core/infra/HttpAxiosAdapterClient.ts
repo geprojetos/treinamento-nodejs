@@ -16,7 +16,7 @@ export default class HttpClientAxiosAdapter implements IHttpClient {
   }
 
   async delete(input: IDeleteFood): Promise<any> {
-    const response = await axios.delete(`${this._baseUrl}/${input}`)
+    const response = await axios.delete(`${this._baseUrl}/?id=${input.id}`)
     return response.data
   }
 

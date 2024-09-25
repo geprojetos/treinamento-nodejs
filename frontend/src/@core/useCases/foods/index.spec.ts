@@ -188,8 +188,10 @@ describe("UseCreateFood", () => {
 describe("UseDeleteFood", () => {
   test("Should be able delete food", async () => {
     const useCase = new UseDeleteFood(gateway)
-    const input = {
+    const input: IDeleteFood = {
       id: "1",
+      isConfirm: true,
+      callback: () => null,
     }
     const response = await useCase.execute(input)
     const output = {
@@ -201,12 +203,26 @@ describe("UseDeleteFood", () => {
 
   test("Should be able error delete food ID is required", async () => {
     const useCase = new UseDeleteFood(gateway)
-    const input = {
+    const input: IDeleteFood = {
       id: "",
+      isConfirm: true,
     }
     const response = await useCase.execute(input)
     const output = {
       message: "ID is required",
+    }
+    expect(response).toEqual(output)
+  })
+
+  test("Should be able error delete food is pending confirm", async () => {
+    const useCase = new UseDeleteFood(gateway)
+    const input: IDeleteFood = {
+      id: "test",
+      isConfirm: false,
+    }
+    const response = await useCase.execute(input)
+    const output = {
+      message: "Is pending confirm",
     }
     expect(response).toEqual(output)
   })
