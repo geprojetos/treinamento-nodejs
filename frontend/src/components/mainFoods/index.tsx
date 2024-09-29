@@ -1,19 +1,6 @@
 import { IUseNavigateDetailFoodParams } from "@/@core/useCases/foods/UseNavigateDetailFood"
 import useGetAllPresentation from "@/presentation/foods/main"
 import Head from "next/head"
-import localFont from "next/font/local"
-import styles from "@/styles/Home.module.css"
-
-const geistSans = localFont({
-  src: "../../pages/fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-})
-const geistMono = localFont({
-  src: "../../pages/fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-})
 
 const MainFoods = () => {
   const { foods, navigateToDetail, navigateToCreate } = useGetAllPresentation()
@@ -26,18 +13,19 @@ const MainFoods = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
-        className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
-      >
-        <main className={styles.main}>
-          <div className={styles.ctas}>
+      <div className="flex flex-col h-full">
+        <main >
+          <button className="rounded-md bg-blue-500 text-white p-2 mt-2 mb-4 w-1/3" onClick={navigateToCreate}>Cadastrar</button>
+
+          <div className="grid grid-cols-3 gap-3">
             {foods.map((food, index) => {
               return (
-                <section key={`list-${index}`}>
-                  <h1>{food.name}</h1>
-                  <p>{food.name}</p>
-                  <p>{food.price}</p>
+                <section className="flex flex-col p-4 items-center justify-center border border-gray-100 rounded-2xl" key={`list-${index}`}>
+                  <h1 className="text-2xl text-gray-800 font-bold">{food.name}</h1>
+                  <p className="text-xl text-gray-600">{food.name}</p>
+                  <p className="text-xl text-gray-600"><span className="text-sm">R$</span>{food.price}</p>
                   <button
+                    className="rounded-md bg-blue-500 text-white p-2 mt-2 w-full"
                     onClick={() =>
                       navigateToDetail(food as IUseNavigateDetailFoodParams)
                     }
@@ -48,9 +36,9 @@ const MainFoods = () => {
               )
             })}
           </div>
-          <button onClick={navigateToCreate}>Adicionar</button>
+
         </main>
-        <footer className={styles.footer}>
+        <footer className="flex justify-center">
           <p>@Foods</p>
         </footer>
       </div>
