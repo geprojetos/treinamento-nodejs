@@ -84,7 +84,7 @@
   resolved "https://registry.yarnpkg.com/@biomejs/cli-win32-x64/-/cli-win32-x64-1.9.2.tgz#6f506d604d3349c1ba674d46cb96540c00a2ba83"
   integrity sha512-JC3XvdYcjmu1FmAehVwVV0SebLpeNTnO2ZaMdGCSOdS7f8O9Fq14T2P1gTG1Q29Q8Dt1S03hh0IdVpIZykOL8g==
 
-"@core@./@core/dist/":
+"@core@../@core/dist/":
   version "1.0.0"
   dependencies:
     axios "1.7.7"
