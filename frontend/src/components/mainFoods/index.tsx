@@ -1,4 +1,4 @@
-import { IUseNavigateDetailFoodParams } from "@/@core/useCases/foods/UseNavigateDetailFood"
+import { IUseNavigateDetailFoodParams } from "@core/useCases/foods/UseNavigateDetailFood"
 import useGetAllPresentation from "@/presentation/foods/main"
 import Head from "next/head"
 

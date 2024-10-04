@@ -1,5 +1,5 @@
-import { useCreateFood } from "@/@core"
-import { ICreateFood } from "@/@core/useCases/foods/UseCreateFood"
+import { useCreateFood } from "@core"
+import { ICreateFood } from "@core/useCases/foods/UseCreateFood"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, FormEvent, useState } from "react"
 

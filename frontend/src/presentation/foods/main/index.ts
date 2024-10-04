@@ -3,13 +3,13 @@ import {
   useGetAllFoods,
   useNavigateDetailFood,
   useDeleteFood,
-} from "../../../@core/index"
-import { IFood } from "../../../@core/domain/Food"
+} from "@core/index"
+import { IFood } from "@core/domain/Food"
 import { useRouter } from "next/router"
 import {
   IUseNavigateDetailFood,
   IUseNavigateDetailFoodParams,
-} from "../../../@core/useCases/foods/UseNavigateDetailFood"
+} from "@core/useCases/foods/UseNavigateDetailFood"
 
 const useGetAllPresentation = () => {
   const { push } = useRouter()
