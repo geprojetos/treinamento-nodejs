@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react"
-import { useGetAllFoods, useNavigateDetailFood } from "../../../@core/index"
+import {
+  useGetAllFoods,
+  useNavigateDetailFood,
+  useDeleteFood,
+} from "../../../@core/index"
 import { IFood } from "../../../@core/domain/Food"
 import { useRouter } from "next/router"
 import {
@@ -8,7 +12,7 @@ import {
 } from "../../../@core/useCases/foods/UseNavigateDetailFood"
 
 const useGetAllPresentation = () => {
-  const router = useRouter()
+  const { push } = useRouter()
   const [foods, setFoods] = useState<IFood[]>([])
 
   useEffect(() => {
@@ -24,7 +28,7 @@ const useGetAllPresentation = () => {
     const input: IUseNavigateDetailFood = {
       params,
       callback: () => {
-        router.push({
+        push({
           pathname: "details",
           query: {
             ...params,
@@ -36,15 +40,27 @@ const useGetAllPresentation = () => {
   }
 
   const navigateToCreate = () => {
-    router.push({
+    push({
       pathname: "create",
     })
+  }
+
+  const handleRemove = async (id: string) => {
+    const isConfirm = confirm("Deseja remover?")
+    if (isConfirm) {
+      await useDeleteFood.execute({
+        id,
+        callback: () => _initialize(),
+        isConfirm,
+      })
+    }
   }
 
   return {
     foods,
     navigateToDetail,
     navigateToCreate,
+    handleRemove,
   }
 }
 
