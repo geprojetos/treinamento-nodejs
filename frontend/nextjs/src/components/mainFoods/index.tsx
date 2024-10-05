@@ -17,6 +17,7 @@ const MainFoods = () => {
       <div className="flex flex-col h-full p-4">
         <main>
           <button
+            data-id="new-food"
             className="rounded-md bg-slate-800 py-2 px-4 mt-6 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none p-2 mb-4 w-50"
             type="button"
             onClick={navigateToCreate}
@@ -28,13 +29,14 @@ const MainFoods = () => {
             {foods.map((food, index) => {
               return (
                 <section
+                  data-id="food-list"
                   className="flex flex-col p-4 items-center justify-center border border-slate-200 rounded-2xl"
                   key={`list-${index}`}
                 >
-                  <h1 className="mb-2 text-slate-800 text-xl font-semibold">
+                  <h1 data-id="food-list-title" className="mb-2 text-slate-800 text-xl font-semibold">
                     {food.name}
                   </h1>
-                  <p className="text-slate-600 leading-normal font-light">
+                  <p data-id="food-list-price" className="text-slate-600 leading-normal font-light">
                     Preço:
                     <span className="text-sm">R$</span>
                     {food.price}
@@ -42,6 +44,7 @@ const MainFoods = () => {
 
                   <div>
                     <button
+                      data-id="food-list-btn-details"
                       className="rounded-md bg-blue-800 hover:bg-blue-700 text-white p-2 mt-2 w-full"
                       onClick={() =>
                         navigateToDetail(food as IUseNavigateDetailFoodParams)
@@ -50,6 +53,7 @@ const MainFoods = () => {
                       Detalhar
                     </button>
                     <button
+                      data-id="food-list-btn-remove"
                       className="rounded-md bg-red-800 hover:bg-red-700 text-white p-2 mt-2 w-full"
                       onClick={() => handleRemove(food.id!)}
                     >
