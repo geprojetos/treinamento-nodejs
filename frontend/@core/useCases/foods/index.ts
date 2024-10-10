@@ -6,7 +6,7 @@ import UseGetAllFoods from "./UseGetAllFoods"
 import UseGetOnlyFood from "./UseGetOnlyFood"
 import UseNavigateDetailFood from "./UseNavigateDetailFood"
 
-const baseUrl = "http://localhost:3001/foods"
+const baseUrl = "http://localhost:3001/foods-v2"
 const httpClient = new HttpClientAxiosAdapter(baseUrl)
 const gateway = new Gateway(httpClient)
 const useCreateFood = new UseCreateFood(gateway)
