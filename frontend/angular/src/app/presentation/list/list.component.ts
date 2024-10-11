@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IFood } from '@core/dist/domain/Food';
-import { useGetAllFoods } from '@core/dist/';
+import { useGetAllFoods, useDeleteFood } from '@core/dist/';
 import { Router } from '@angular/router';
 
 @Component({
@@ -36,4 +36,15 @@ export class ListComponent implements OnInit {
   handleNavigateCreate() {
     this._route.navigate(['/create']);
   }
+
+  handleRemove = async (id: string) => {
+    const isConfirm = confirm('Deseja remover?');
+    if (isConfirm) {
+      await useDeleteFood.execute({
+        id,
+        callback: () => this._initialize(),
+        isConfirm,
+      });
+    }
+  };
 }
