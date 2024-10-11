@@ -1,18 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IFood } from '@core/dist/domain/Food';
-import { useGetAllFoods, useGetOnlyFood } from '@core/dist/';
-import {
-  ActivatedRoute,
-  NavigationExtras,
-  Router,
-  RouterLink,
-} from '@angular/router';
+import { useGetAllFoods } from '@core/dist/';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
 })
@@ -36,5 +31,9 @@ export class ListComponent implements OnInit {
         ...food,
       },
     });
+  }
+
+  handleNavigateCreate() {
+    this._route.navigate(['/create']);
   }
 }
