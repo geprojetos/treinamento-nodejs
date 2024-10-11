@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ICreateFood } from '@core/dist/useCases/foods/UseCreateFood';
 import { useCreateFood } from '@core/dist/useCases/foods/';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create',
@@ -25,7 +26,7 @@ export class CreateComponent {
   formValues = this.defaultValues;
   formErrors = this.defaultErrors;
 
-  constructor(private _route: Router) {}
+  constructor(private _route: Router, private _location: Location) {}
 
   async handleSubmit() {
     const data = await useCreateFood.execute(this.formValues, () => {
@@ -33,6 +34,10 @@ export class CreateComponent {
       this._resetForm();
     });
     this._setFormError(data);
+  }
+
+  handleBackNavigate() {
+    this._location.back();
   }
 
   private _navigateToList() {
