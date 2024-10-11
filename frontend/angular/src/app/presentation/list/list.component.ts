@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IFood } from '@core/dist/domain/Food';
-import { useGetAllFoods, useDeleteFood } from '@core/dist/';
+
+import {
+  useGetAllFoods,
+  useDeleteFood,
+  useNavigateDetailFood,
+} from '@core/dist/';
+import {
+  IUseNavigateDetailFood,
+  IUseNavigateDetailFoodParams as IFood,
+} from '@core/useCases/foods/UseNavigateDetailFood';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,10 +33,20 @@ export class ListComponent implements OnInit {
     this.foods = response;
   };
 
-  handleNavigateDetails(food: IFood) {
+  handleNavigateDetails(params: IFood) {
+    const input: IUseNavigateDetailFood = {
+      params,
+      callback: () => {
+        this._navigateDetails(params);
+      },
+    };
+    useNavigateDetailFood.execute(input);
+  }
+
+  private _navigateDetails(params: IFood) {
     this._route.navigate(['/details'], {
       queryParams: {
-        ...food,
+        ...params,
       },
     });
   }

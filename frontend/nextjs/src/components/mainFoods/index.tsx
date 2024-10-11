@@ -1,5 +1,5 @@
 import { IUseNavigateDetailFoodParams } from "@core/useCases/foods/UseNavigateDetailFood"
-import useGetAllPresentation from "@/presentation/foods/main"
+import useGetAllPresentation from "@/presentation/foods/list"
 import Head from "next/head"
 
 const MainFoods = () => {
@@ -33,10 +33,16 @@ const MainFoods = () => {
                   className="flex flex-col p-4 items-center justify-center border border-slate-200 rounded-2xl"
                   key={`list-${index}`}
                 >
-                  <h1 data-id="food-list-title" className="mb-2 text-slate-800 text-xl font-semibold">
+                  <h1
+                    data-id="food-list-title"
+                    className="mb-2 text-slate-800 text-xl font-semibold"
+                  >
                     {food.name}
                   </h1>
-                  <p data-id="food-list-price" className="text-slate-600 leading-normal font-light">
+                  <p
+                    data-id="food-list-price"
+                    className="text-slate-600 leading-normal font-light"
+                  >
                     Preço:
                     <span className="text-sm">R$</span>
                     {food.price}
