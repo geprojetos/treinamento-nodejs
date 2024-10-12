@@ -27,11 +27,19 @@ const createPresentation = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = await useCreateFood.execute(formValues, () => {
-      push("/")
-      setFormValues(defaultFormValues)
-      setFormErrors(defaultFormValues)
+      _navigateToList()
+      _resetForms()
     })
     setFormErrors(data)
+  }
+
+  const _navigateToList = () => {
+    push("/")
+  }
+
+  const _resetForms = () => {
+    setFormValues(defaultFormValues)
+    setFormErrors(defaultFormValues)
   }
 
   return {

@@ -16,7 +16,12 @@ const createFoodView = () => {
               placeholder="name"
               onChange={handleChange}
             />
-            <span data-id="food-create-error-input-name" className="text-sm text-red-600">{formErrors?.name}</span>
+            <span
+              data-id="food-create-error-input-name"
+              className="text-sm text-red-600"
+            >
+              {formErrors?.name}
+            </span>
           </label>
         </div>
 
@@ -31,7 +36,12 @@ const createFoodView = () => {
               placeholder="price"
               onChange={handleChange}
             />
-            <span data-id="food-create-error-input-price" className="text-sm text-red-600">{formErrors?.price}</span>
+            <span
+              data-id="food-create-error-input-price"
+              className="text-sm text-red-600"
+            >
+              {formErrors?.price}
+            </span>
           </label>
         </div>
 
@@ -46,7 +56,12 @@ const createFoodView = () => {
               placeholder="category"
               onChange={handleChange}
             />
-            <span data-id="food-create-error-input-category" className="text-sm text-red-600">{formErrors?.category}</span>
+            <span
+              data-id="food-create-error-input-category"
+              className="text-sm text-red-600"
+            >
+              {formErrors?.category}
+            </span>
           </label>
         </div>
 
