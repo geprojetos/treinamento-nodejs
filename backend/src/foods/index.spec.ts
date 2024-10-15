@@ -2,7 +2,10 @@ import supertest from "supertest"
 import FoodsDatabase from "./3_resources/database"
 import GetFoodsApplication from "./2_application/getFoods"
 import GetFoodsController from "./1_drivers/getFoods/GetFoodsController"
-import { IHttpClient } from "./3_resources/adapters/HttpClientAxiosAdapter"
+import {
+  IFoodsGetAllResponse,
+  IHttpClient,
+} from "./3_resources/adapters/HttpClientAxiosAdapter"
 import ServerClientExpressAdapter from "./1_drivers/adapters/ServerClientExpressAdapter"
 import CreateFoodsApplication from "./2_application/createFoods"
 import CreateFoodsController from "./1_drivers/createFoods/CreateFoodsController"
@@ -39,12 +42,16 @@ describe("GetFoods", () => {
 
   beforeAll(() => {
     const httpClient: IHttpClient = {
-      get: async (): Promise<any> => {
-        return [
-          { id: "1", name: "Macarronada", price: 12.5, category: "main" },
-          { id: "2", name: "File de frango", price: 10, category: "main" },
-          { id: "3", name: "Sorvete", price: 20, category: "secondary" },
-        ]
+      get: async (): Promise<IFoodsGetAllResponse> => {
+        return {
+          status: "200",
+          message: "success",
+          data: [
+            { id: "1", name: "Macarronada", price: 12.5, category: "main" },
+            { id: "2", name: "File de frango", price: 10, category: "main" },
+            { id: "3", name: "Sorvete", price: 20, category: "secondary" },
+          ],
+        }
       },
     }
     const database = new FoodsDatabase(httpClient)
@@ -58,11 +65,16 @@ describe("GetFoods", () => {
   test("Should be able get all foods", async () => {
     const response = await supertest(app).get("/foods")
     const data = JSON.parse(response.text)
-    const output = [
-      { id: "1", name: "Macarronada", price: 13.75, category: "main" },
-      { id: "2", name: "File de frango", price: 11, category: "main" },
-      { id: "3", name: "Sorvete", price: 22, category: "secondary" },
-    ]
+    const output: IFoodsGetAllResponse = {
+      status: "200",
+      message: "success",
+      data: [
+        { id: "1", name: "Macarronada", price: 13.75, category: "main" },
+        { id: "2", name: "File de frango", price: 11, category: "main" },
+        { id: "3", name: "Sorvete", price: 22, category: "secondary" },
+      ],
+    }
+
     expect(data).toEqual(output)
   })
 
@@ -71,10 +83,14 @@ describe("GetFoods", () => {
       .get("/foods")
       .query({ category: "main" })
     const data = JSON.parse(response.text)
-    const output = [
-      { id: "1", name: "Macarronada", price: 13.75, category: "main" },
-      { id: "2", name: "File de frango", price: 11, category: "main" },
-    ]
+    const output: IFoodsGetAllResponse = {
+      status: "200",
+      message: "success",
+      data: [
+        { id: "1", name: "Macarronada", price: 13.75, category: "main" },
+        { id: "2", name: "File de frango", price: 11, category: "main" },
+      ],
+    }
     expect(data).toEqual(output)
   })
 
@@ -83,9 +99,11 @@ describe("GetFoods", () => {
       .get("/foods")
       .query({ category: "secondary" })
     const data = JSON.parse(response.text)
-    const output = [
-      { id: "3", name: "Sorvete", price: 22, category: "secondary" },
-    ]
+    const output: IFoodsGetAllResponse = {
+      status: "200",
+      message: "success",
+      data: [{ id: "3", name: "Sorvete", price: 22, category: "secondary" }],
+    }
     expect(data).toEqual(output)
   })
 })

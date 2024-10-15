@@ -1,7 +1,10 @@
-import { IHttpClient } from "../adapters/HttpClientAxiosAdapter"
+import {
+  IFoodsGetAllResponse,
+  IHttpClient,
+} from "../adapters/HttpClientAxiosAdapter"
 
 export interface IDatabase {
-  getFoods(): Promise<any>
+  getFoods(): Promise<IFoodsGetAllResponse>
   createFood(input: any): Promise<any>
   deleteFood(input: any): Promise<any>
 }
@@ -19,7 +22,7 @@ class FoodsDatabase implements IDatabase {
     return response
   }
 
-  async getFoods() {
+  async getFoods(): Promise<IFoodsGetAllResponse> {
     const response = await this._httpClient.get()
     return response
   }

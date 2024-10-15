@@ -3,11 +3,24 @@ import { IGetOnlyFood } from "../useCases/foods/UseGetOnlyFood"
 import { ICreateFood } from "../useCases/foods/UseCreateFood"
 import { IDeleteFood } from "../useCases/foods/UseDeleteFood"
 
-export interface IHttpClient {
-  get(): Promise<any>
+interface IHttpClient {
+  get(): Promise<IFoodsGetResponse>
   getOnly(input: IGetOnlyFood): Promise<any>
   create(input: ICreateFood): Promise<any>
   delete(input: IDeleteFood): Promise<any>
+}
+
+interface IFoodsGetResponse {
+  status: string
+  message: string
+  data: IFoodResponse[]
+}
+
+interface IFoodResponse {
+  id: string
+  name: string
+  price: number
+  category: string
 }
 
 export default class HttpClientAxiosAdapter implements IHttpClient {
@@ -30,8 +43,10 @@ export default class HttpClientAxiosAdapter implements IHttpClient {
     return response.data
   }
 
-  async get(): Promise<any> {
+  async get(): Promise<IFoodsGetResponse> {
     const response = await axios.get(this._baseUrl)
     return response.data
   }
 }
+
+export type { IHttpClient, IFoodsGetResponse, IFoodResponse }

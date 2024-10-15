@@ -2,10 +2,10 @@ import GatewayValidation from "../domain/GatewayValidation"
 import { ICreateFood } from "../useCases/foods/UseCreateFood"
 import { IDeleteFood } from "../useCases/foods/UseDeleteFood"
 import { IGetOnlyFood } from "../useCases/foods/UseGetOnlyFood"
-import { IHttpClient } from "./HttpAxiosAdapterClient"
+import { IFoodsGetResponse, IHttpClient } from "./HttpAxiosAdapterClient"
 
 interface IGateway {
-  getAllFoods(): Promise<any>
+  getAllFoods(): Promise<IFoodsGetResponse>
   getOnlyFood(input: IGetOnlyFood): Promise<any>
   createFood(input: ICreateFood): Promise<any>
   deleteFood(input: IDeleteFood): Promise<any>
@@ -38,7 +38,7 @@ export default class Gateway implements IGateway {
     return response
   }
 
-  async getAllFoods() {
+  async getAllFoods(): Promise<IFoodsGetResponse> {
     const response = await this._httpClient.get()
     return response
   }

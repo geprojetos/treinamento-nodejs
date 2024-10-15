@@ -4,7 +4,7 @@ import {
   useNavigateDetailFood,
   useDeleteFood,
 } from "@core/index"
-import { IFood } from "@core/domain/Food"
+import { IFoodsGetResponse } from "@core/infra/HttpAxiosAdapterClient"
 import { useRouter } from "next/router"
 import {
   IUseNavigateDetailFood,
@@ -13,14 +13,14 @@ import {
 
 const useGetAllPresentation = () => {
   const { push } = useRouter()
-  const [foods, setFoods] = useState<IFood[]>([])
+  const [foods, setFoods] = useState<IFoodsGetResponse>()
 
   useEffect(() => {
     _initialize()
   }, [])
 
   const _initialize = async () => {
-    const response: IFood[] = await useGetAllFoods.execute()
+    const response: IFoodsGetResponse = await useGetAllFoods.execute()
     setFoods(response)
   }
 

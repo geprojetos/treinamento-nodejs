@@ -2,9 +2,22 @@ import axios, { AxiosInstance } from "axios"
 import LoggerPinoAdapter, { ILogger } from "./LoggerPinoAdapter"
 
 interface IHttpClient {
-  get?(): Promise<any>
+  get?(): Promise<IFoodsGetAllResponse>
   post?(input: any): Promise<any>
   delete?(input: any): Promise<any>
+}
+
+interface IFoodsGetAllResponse {
+  status: string
+  message: string
+  data: IFood[]
+}
+
+interface IFood {
+  id: string
+  name: string
+  price: number
+  category: string
 }
 
 class HttpClientAxiosAdapter implements IHttpClient {
@@ -18,9 +31,13 @@ class HttpClientAxiosAdapter implements IHttpClient {
     this._interceptor()
   }
 
-  async get(): Promise<any> {
+  async get(): Promise<IFoodsGetAllResponse> {
     const response = await this._axios.get(this._baseUrl)
-    return response.data
+    return {
+      status: String(response.status),
+      message: response.statusText,
+      data: response.data,
+    }
   }
 
   async post(input: any): Promise<any> {
@@ -86,4 +103,4 @@ class HttpClientAxiosAdapter implements IHttpClient {
 }
 
 export default HttpClientAxiosAdapter
-export type { IHttpClient }
+export type { IHttpClient, IFoodsGetAllResponse, IFood }

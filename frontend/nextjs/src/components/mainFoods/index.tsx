@@ -26,7 +26,7 @@ const MainFoods = () => {
           </button>
 
           <div className="grid grid-cols-3 gap-3">
-            {foods.map((food, index) => {
+            {foods?.data.map((food, index) => {
               return (
                 <section
                   data-id="food-list"

@@ -8,8 +8,9 @@ import {
 } from '@core/dist/';
 import {
   IUseNavigateDetailFood,
-  IUseNavigateDetailFoodParams as IFood,
-} from '@core/useCases/foods/UseNavigateDetailFood';
+  IUseNavigateDetailFoodParams,
+} from '@core/dist/useCases/foods/UseNavigateDetailFood';
+import { IFoodsGetResponse } from '@core/dist/infra/HttpAxiosAdapterClient';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,7 +21,11 @@ import { Router } from '@angular/router';
   styleUrl: './list.component.css',
 })
 export class ListComponent implements OnInit {
-  foods: IFood[] = [];
+  foods: IFoodsGetResponse = {
+    status: '',
+    message: '',
+    data: [],
+  };
 
   constructor(private _route: Router) {}
 
@@ -29,11 +34,11 @@ export class ListComponent implements OnInit {
   }
 
   private _initialize = async () => {
-    const response: IFood[] = await useGetAllFoods.execute();
+    const response: IFoodsGetResponse = await useGetAllFoods.execute();
     this.foods = response;
   };
 
-  handleNavigateDetails(params: IFood) {
+  handleNavigateDetails(params: IUseNavigateDetailFoodParams) {
     const input: IUseNavigateDetailFood = {
       params,
       callback: () => {
@@ -43,7 +48,7 @@ export class ListComponent implements OnInit {
     useNavigateDetailFood.execute(input);
   }
 
-  private _navigateDetails(params: IFood) {
+  private _navigateDetails(params: IUseNavigateDetailFoodParams) {
     this._route.navigate(['/details'], {
       queryParams: {
         ...params,
