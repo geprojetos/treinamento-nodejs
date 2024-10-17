@@ -3,13 +3,13 @@ import {
   useGetAllFoods,
   useNavigateDetailFood,
   useDeleteFood,
-} from "@core/index"
-import { IFoodsGetResponse } from "@core/infra/HttpAxiosAdapterClient"
+} from "@core/dist/index"
+import { IFoodsGetResponse } from "@core/dist/infra/HttpAxiosAdapterClient"
 import { useRouter } from "next/router"
 import {
   IUseNavigateDetailFood,
   IUseNavigateDetailFoodParams,
-} from "@core/useCases/foods/UseNavigateDetailFood"
+} from "@core/dist/useCases/foods/UseNavigateDetailFood"
 
 const useGetAllPresentation = () => {
   const { push } = useRouter()

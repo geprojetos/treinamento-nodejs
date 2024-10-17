@@ -1,11 +1,12 @@
 import {
+  IFoodCreateResponse,
   IFoodsGetAllResponse,
   IHttpClient,
 } from "../adapters/HttpClientAxiosAdapter"
 
 export interface IDatabase {
   getFoods(): Promise<IFoodsGetAllResponse>
-  createFood(input: any): Promise<any>
+  createFood(input: any): Promise<IFoodCreateResponse>
   deleteFood(input: any): Promise<any>
 }
 
@@ -17,7 +18,7 @@ class FoodsDatabase implements IDatabase {
     return response
   }
 
-  async createFood(input: any): Promise<any> {
+  async createFood(input: any): Promise<IFoodCreateResponse> {
     const response = await this._httpClient.post(input)
     return response
   }

@@ -20,7 +20,7 @@ const createFoodView = () => {
               data-id="food-create-error-input-name"
               className="text-sm text-red-600"
             >
-              {formErrors?.name}
+              {formErrors?.error?.name}
             </span>
           </label>
         </div>
@@ -40,7 +40,7 @@ const createFoodView = () => {
               data-id="food-create-error-input-price"
               className="text-sm text-red-600"
             >
-              {formErrors?.price}
+              {formErrors?.error?.price}
             </span>
           </label>
         </div>
@@ -60,7 +60,7 @@ const createFoodView = () => {
               data-id="food-create-error-input-category"
               className="text-sm text-red-600"
             >
-              {formErrors?.category}
+              {formErrors?.error?.category}
             </span>
           </label>
         </div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ICreateFood } from '@core/dist/useCases/foods/UseCreateFood';
 import { useCreateFood } from '@core/dist/useCases/foods/';
+import { IFoodCreateResponse } from '@core/dist/infra/HttpAxiosAdapterClient';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -18,15 +19,22 @@ export class CreateComponent {
     category: '',
     price: 0,
   };
-  defaultErrors = {
-    name: '',
-    category: '',
-    price: '',
+  defaultErrors: IFoodCreateResponse = {
+    status: '',
+    message: '',
+    error: {
+      name: '',
+      category: '',
+      price: '',
+    },
   };
-  formValues = this.defaultValues;
-  formErrors = this.defaultErrors;
+  formValues: ICreateFood;
+  formErrors: IFoodCreateResponse;
 
-  constructor(private _route: Router, private _location: Location) {}
+  constructor(private _route: Router, private _location: Location) {
+    this.formValues = this.defaultValues;
+    this.formErrors = this.defaultErrors;
+  }
 
   async handleSubmit() {
     const data = await useCreateFood.execute(this.formValues, () => {

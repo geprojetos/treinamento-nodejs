@@ -2,11 +2,12 @@ import axios from "axios"
 import { IGetOnlyFood } from "../useCases/foods/UseGetOnlyFood"
 import { ICreateFood } from "../useCases/foods/UseCreateFood"
 import { IDeleteFood } from "../useCases/foods/UseDeleteFood"
+import { IFood } from "../domain/Food"
 
 interface IHttpClient {
   get(): Promise<IFoodsGetResponse>
   getOnly(input: IGetOnlyFood): Promise<any>
-  create(input: ICreateFood): Promise<any>
+  create(input: ICreateFood): Promise<IFoodCreateResponse>
   delete(input: IDeleteFood): Promise<any>
 }
 
@@ -23,6 +24,19 @@ interface IFoodResponse {
   category: string
 }
 
+interface IFoodCreateResponse {
+  status: string
+  message: string
+  data?: Partial<IFood[]>
+  error?: Partial<IFoodError>
+}
+
+interface IFoodError {
+  name: string
+  price: string
+  category: string
+}
+
 export default class HttpClientAxiosAdapter implements IHttpClient {
   constructor(private _baseUrl: string) {
     this._baseUrl = _baseUrl
@@ -33,8 +47,11 @@ export default class HttpClientAxiosAdapter implements IHttpClient {
     return response.data
   }
 
-  async create(input: ICreateFood): Promise<any> {
-    const response = await axios.post(`${this._baseUrl}`, input)
+  async create(input: ICreateFood): Promise<IFoodCreateResponse> {
+    const response = await axios.post<IFoodCreateResponse>(
+      `${this._baseUrl}`,
+      input
+    )
     return response.data
   }
 
@@ -44,9 +61,14 @@ export default class HttpClientAxiosAdapter implements IHttpClient {
   }
 
   async get(): Promise<IFoodsGetResponse> {
-    const response = await axios.get(this._baseUrl)
+    const response = await axios.get<IFoodsGetResponse>(this._baseUrl)
     return response.data
   }
 }
 
-export type { IHttpClient, IFoodsGetResponse, IFoodResponse }
+export type {
+  IHttpClient,
+  IFoodsGetResponse,
+  IFoodResponse,
+  IFoodCreateResponse,
+}

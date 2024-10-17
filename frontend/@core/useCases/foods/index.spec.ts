@@ -1,6 +1,10 @@
 import { vitest } from "vitest"
 import Gateway from "../../infra/Gateway"
-import { IHttpClient } from "../../infra/HttpAxiosAdapterClient"
+import {
+  IFoodCreateResponse,
+  IFoodsGetResponse,
+  IHttpClient,
+} from "../../infra/HttpAxiosAdapterClient"
 import UseCreateFood, { ICreateFood } from "./UseCreateFood"
 import UseDeleteFood, { IDeleteFood } from "./UseDeleteFood"
 import UseGetAllFoods from "./UseGetAllFoods"
@@ -9,14 +13,17 @@ import UseNavigateDetailFood, {
   IUseNavigateDetailFood,
   IUseNavigateDetailFoodParams,
 } from "./UseNavigateDetailFood"
+import { IFood } from "../../domain/Food"
 
 let httpClient: IHttpClient
 let gateway: Gateway
 
 beforeAll(() => {
   httpClient = {
-    get: async (): Promise<any> => {
+    get: async (): Promise<IFoodsGetResponse> => {
       return {
+        status: "200",
+        message: "success",
         data: [
           {
             id: "1",
@@ -51,13 +58,11 @@ beforeAll(() => {
         ],
       }
     },
-    create: async (input: ICreateFood): Promise<any> => {
+    create: async (input: IFood): Promise<IFoodCreateResponse> => {
       return {
-        data: {
-          message: "Success",
-          status: "201",
-          data: input,
-        },
+        message: "Success",
+        status: "201",
+        data: [input],
       }
     },
     delete: async (input: IDeleteFood): Promise<any> => {
@@ -134,12 +139,12 @@ describe("UseCreateFood", () => {
       category: "main",
     }
     const response = await useCase.execute(input)
-    const output = {
+    const output: IFoodCreateResponse = {
       message: "Success",
       status: "201",
-      data: input,
+      data: [input],
     }
-    expect(response.data).toEqual(output)
+    expect(response).toEqual(output)
   })
 
   test("Should be able error create food name is required", async () => {
@@ -150,8 +155,14 @@ describe("UseCreateFood", () => {
       category: "main",
     }
     const response = await useCase.execute(input)
-    const output = {
-      name: "Name is required",
+    const output: IFoodCreateResponse = {
+      status: "",
+      message: "",
+      error: {
+        name: "Name is required",
+        price: "",
+        category: "",
+      },
     }
     expect(response).toEqual(output)
   })
@@ -164,8 +175,14 @@ describe("UseCreateFood", () => {
       category: "main",
     }
     const response = await useCase.execute(input)
-    const output = {
-      price: "Price is required",
+    const output: IFoodCreateResponse = {
+      status: "",
+      message: "",
+      error: {
+        name: "",
+        price: "Price is required",
+        category: "",
+      },
     }
     expect(response).toEqual(output)
   })
@@ -178,8 +195,14 @@ describe("UseCreateFood", () => {
       category: "",
     }
     const response = await useCase.execute(input)
-    const output = {
-      category: "Category is required",
+    const output: IFoodCreateResponse = {
+      status: "",
+      message: "",
+      error: {
+        name: "",
+        price: "",
+        category: "Category is required",
+      },
     }
     expect(response).toEqual(output)
   })

@@ -1,17 +1,30 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useCreateFood } from "@core"
-import { ICreateFood } from "@core/useCases/foods/UseCreateFood"
+import { ICreateFood } from "@core/dist/useCases/foods/UseCreateFood"
+import { IFoodCreateResponse } from "@core/dist/infra/HttpAxiosAdapterClient"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, FormEvent, useState } from "react"
 
 const createPresentation = () => {
-  const defaultFormValues = {
+  const defaultFormValues: ICreateFood = {
     name: "",
-    price: 0,
     category: "",
+    price: 0,
+  }
+  const defaultErrorFormValues: IFoodCreateResponse = {
+    status: "",
+    message: "",
+    error: {
+      name: "",
+      category: "",
+      price: "",
+    },
   }
   const { push } = useRouter()
   const [formValues, setFormValues] = useState<ICreateFood>(defaultFormValues)
-  const [formErrors, setFormErrors] = useState<ICreateFood>(defaultFormValues)
+  const [formErrors, setFormErrors] = useState<IFoodCreateResponse>(
+    defaultErrorFormValues
+  )
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const _target = event.target.id
@@ -39,7 +52,7 @@ const createPresentation = () => {
 
   const _resetForms = () => {
     setFormValues(defaultFormValues)
-    setFormErrors(defaultFormValues)
+    setFormErrors(defaultErrorFormValues)
   }
 
   return {
