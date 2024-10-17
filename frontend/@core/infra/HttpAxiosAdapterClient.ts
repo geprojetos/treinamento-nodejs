@@ -8,7 +8,7 @@ interface IHttpClient {
   get(): Promise<IFoodsGetResponse>
   getOnly(input: IGetOnlyFood): Promise<any>
   create(input: ICreateFood): Promise<IFoodCreateResponse>
-  delete(input: IDeleteFood): Promise<any>
+  delete(input: IDeleteFood): Promise<IDeleteResponse>
 }
 
 interface IFoodsGetResponse {
@@ -35,6 +35,11 @@ interface IFoodError {
   name: string
   price: string
   category: string
+}
+
+interface IDeleteResponse {
+  message: string
+  status: string
 }
 
 export default class HttpClientAxiosAdapter implements IHttpClient {
@@ -71,4 +76,5 @@ export type {
   IFoodsGetResponse,
   IFoodResponse,
   IFoodCreateResponse,
+  IDeleteResponse,
 }

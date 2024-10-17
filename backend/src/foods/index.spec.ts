@@ -3,6 +3,7 @@ import FoodsDatabase from "./3_resources/database"
 import GetFoodsApplication from "./2_application/getFoods"
 import GetFoodsController from "./1_drivers/getFoods/GetFoodsController"
 import {
+  IDeleteResponse,
   IFoodsGetAllResponse,
   IHttpClient,
 } from "./3_resources/adapters/HttpClientAxiosAdapter"
@@ -200,7 +201,7 @@ describe("DeleteFoods", () => {
     const response = await supertest(app).delete("/foods").query({ id: "test" })
 
     const data = response.body
-    const output = {
+    const output: IDeleteResponse = {
       message: "OK",
       status: "200",
     }
@@ -215,7 +216,7 @@ describe("DeleteFoods", () => {
       .set("Accept", "application/json")
 
     const data = response.body
-    const output = {
+    const output: IDeleteResponse = {
       message: "ID is required",
       status: "400",
     }

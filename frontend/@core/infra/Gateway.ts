@@ -3,6 +3,7 @@ import { ICreateFood } from "../useCases/foods/UseCreateFood"
 import { IDeleteFood } from "../useCases/foods/UseDeleteFood"
 import { IGetOnlyFood } from "../useCases/foods/UseGetOnlyFood"
 import {
+  IDeleteResponse,
   IFoodCreateResponse,
   IFoodsGetResponse,
   IHttpClient,
@@ -12,13 +13,13 @@ interface IGateway {
   getAllFoods(): Promise<IFoodsGetResponse>
   getOnlyFood(input: IGetOnlyFood): Promise<any>
   createFood(input: ICreateFood): Promise<IFoodCreateResponse>
-  deleteFood(input: IDeleteFood): Promise<any>
+  deleteFood(input: IDeleteFood): Promise<IDeleteResponse>
 }
 
 export default class Gateway implements IGateway {
   constructor(private _httpClient: IHttpClient) {}
 
-  async deleteFood(input: IDeleteFood): Promise<any> {
+  async deleteFood(input: IDeleteFood): Promise<IDeleteResponse> {
     if (!input?.id) {
       return GatewayValidation.isValidDelete(input.id)
     }

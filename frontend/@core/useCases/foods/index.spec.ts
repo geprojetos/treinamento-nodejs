@@ -1,6 +1,7 @@
 import { vitest } from "vitest"
 import Gateway from "../../infra/Gateway"
 import {
+  IDeleteResponse,
   IFoodCreateResponse,
   IFoodsGetResponse,
   IHttpClient,
@@ -65,12 +66,10 @@ beforeAll(() => {
         data: [input],
       }
     },
-    delete: async (input: IDeleteFood): Promise<any> => {
+    delete: async (input: IDeleteFood): Promise<IDeleteResponse> => {
       return {
-        data: {
-          message: "OK",
-          status: "200",
-        },
+        message: "OK",
+        status: "200",
       }
     },
   }
@@ -124,6 +123,7 @@ describe("UseGetOnlyFood", () => {
     const useCase = new UseGetOnlyFood(gateway)
     const response = await useCase.execute({ id: "" })
     const output = {
+      status: "400",
       message: "ID is required",
     }
     expect(response).toEqual(output)
@@ -221,7 +221,7 @@ describe("UseDeleteFood", () => {
       message: "OK",
       status: "200",
     }
-    expect(response.data).toEqual(output)
+    expect(response).toEqual(output)
   })
 
   test("Should be able error delete food ID is required", async () => {
@@ -231,7 +231,8 @@ describe("UseDeleteFood", () => {
       isConfirm: true,
     }
     const response = await useCase.execute(input)
-    const output = {
+    const output: IDeleteResponse = {
+      status: "400",
       message: "ID is required",
     }
     expect(response).toEqual(output)
@@ -244,7 +245,8 @@ describe("UseDeleteFood", () => {
       isConfirm: false,
     }
     const response = await useCase.execute(input)
-    const output = {
+    const output: IDeleteResponse = {
+      status: "400",
       message: "Is pending confirm",
     }
     expect(response).toEqual(output)

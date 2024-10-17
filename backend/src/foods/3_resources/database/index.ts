@@ -1,4 +1,5 @@
 import {
+  IDeleteResponse,
   IFoodCreateResponse,
   IFoodsGetAllResponse,
   IHttpClient,
@@ -7,13 +8,13 @@ import {
 export interface IDatabase {
   getFoods(): Promise<IFoodsGetAllResponse>
   createFood(input: any): Promise<IFoodCreateResponse>
-  deleteFood(input: any): Promise<any>
+  deleteFood(input: any): Promise<IDeleteResponse>
 }
 
 class FoodsDatabase implements IDatabase {
   constructor(private _httpClient: IHttpClient) {}
 
-  async deleteFood(input: any): Promise<any> {
+  async deleteFood(input: any): Promise<IDeleteResponse> {
     const response = await this._httpClient.delete(input)
     return response
   }
