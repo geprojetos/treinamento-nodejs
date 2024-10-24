@@ -10,7 +10,7 @@ class DeleteFoodsApplication {
       id,
     })
 
-    if (response?.description) {
+    if (response?.status === "400") {
       return {
         ...response,
       }
