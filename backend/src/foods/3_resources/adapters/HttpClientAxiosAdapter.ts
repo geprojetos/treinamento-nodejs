@@ -60,19 +60,11 @@ class HttpClientAxiosAdapter implements IHttpClient {
     }
   }
 
-  async delete(input: any): Promise<any> {
-    try {
-      const response = await this._axios.delete(`${this._baseUrl}/${input.id}`)
-      return {
-        status: response.status,
-        message: response.statusText,
-      }
-    } catch (error) {
-      return {
-        status: error.response.status,
-        message: error.response.statusText,
-        description: error.message,
-      }
+  async delete(input: any): Promise<IDeleteResponse> {
+    const response = await this._axios.delete(`${this._baseUrl}/${input.id}`)
+    return {
+      status: String(response.status),
+      message: response.statusText,
     }
   }
 

@@ -1,33 +1,22 @@
 import { IDatabase } from "../../3_resources/database"
+import { IDeleteResponse } from "../../3_resources/adapters/HttpClientAxiosAdapter"
+import DeleteFood from "../../domain/DeleteFood"
 
 class DeleteFoodsApplication {
   constructor(private _getFoodsDatabase: IDatabase) {}
 
-  async execute(req: any): Promise<any> {
+  async execute(req: any): Promise<IDeleteResponse> {
     const { query } = req
     const { id } = query
-    const response = await this._getFoodsDatabase.deleteFood({
+    const deleteFood = new DeleteFood(id)
+
+    if (deleteFood.error.message.length) {
+      return deleteFood.error
+    }
+
+    return await this._getFoodsDatabase.deleteFood({
       id,
     })
-
-    if (response?.status === "400") {
-      return {
-        ...response,
-      }
-    }
-
-    if (!id) {
-      return {
-        message: "ID is required",
-        status: "400",
-      }
-    }
-
-    const output = {
-      status: response.status,
-      message: response.message,
-    }
-    return output
   }
 }
 

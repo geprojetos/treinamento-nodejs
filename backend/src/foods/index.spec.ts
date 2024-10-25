@@ -4,6 +4,7 @@ import GetFoodsApplication from "./2_application/getFoods"
 import GetFoodsController from "./1_drivers/getFoods/GetFoodsController"
 import {
   IDeleteResponse,
+  IFoodCreateResponse,
   IFoodsGetAllResponse,
   IHttpClient,
 } from "./3_resources/adapters/HttpClientAxiosAdapter"
@@ -20,16 +21,20 @@ class HttpClientMemory implements IHttpClient {
     this.foods = []
   }
 
-  async get(): Promise<any> {
+  async get(): Promise<IFoodsGetAllResponse> {
     return this.foods
   }
 
-  async post(input: any): Promise<any> {
+  async post(input: any): Promise<IFoodCreateResponse> {
     this.foods.push(input)
-    return this.foods
+    return {
+      status: "201",
+      message: "Success",
+      data: this.foods,
+    }
   }
 
-  async delete(input: any): Promise<any> {
+  async delete(input: any): Promise<IDeleteResponse> {
     this.foods.filter((food: any) => food.id !== input.id)
     return {
       message: "OK",
