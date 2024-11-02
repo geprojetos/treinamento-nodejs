@@ -6,7 +6,7 @@ interface IMessage {
   data?: IFoodCreateResponse
 }
 
-export default class Food {
+export default class CreateFood {
   error: IMessage = {
     status: "",
     message: "",

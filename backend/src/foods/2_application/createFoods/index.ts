@@ -1,5 +1,5 @@
 import { IDatabase } from "../../3_resources/database"
-import Food from "../../domain/Food"
+import CreateFood from "../../domain/createFood"
 
 class CreateFoodsApplication {
   constructor(private _getFoodsDatabase: IDatabase) {}
@@ -7,7 +7,7 @@ class CreateFoodsApplication {
   async execute(req: any): Promise<any> {
     const { body } = req
     const { name, price, category } = body
-    const food = new Food(name, price, category)
+    const food = new CreateFood(name, price, category)
 
     if (food.error.message.length) {
       return food.error
