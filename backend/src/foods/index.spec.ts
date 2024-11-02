@@ -13,6 +13,12 @@ import CreateFoodsApplication from "./2_application/createFoods"
 import CreateFoodsController from "./1_drivers/createFoods/CreateFoodsController"
 import DeleteFoodsApplication from "./2_application/deleteFoods"
 import DeleteFoodsController from "./1_drivers/deleteFoods/DeleteFoodsController"
+import LoginDatabase, {
+  ILogin,
+  ILoginResponse,
+} from "./3_resources/database/LoginDatabase"
+import LoginApplication from "./2_application/login"
+import LoginController from "./1_drivers/login/LoginController"
 
 class HttpClientMemory implements IHttpClient {
   foods: any
@@ -42,6 +48,47 @@ class HttpClientMemory implements IHttpClient {
     }
   }
 }
+
+describe("Login", () => {
+  let app: any
+
+  beforeAll(() => {
+    const httpClient: IHttpClient = {
+      post: async (): Promise<any> => {
+        return {
+          status: "201",
+          message: "success",
+          data: {
+            email: "teste@teste.com",
+          },
+        }
+      },
+    }
+    const database = new LoginDatabase(httpClient)
+    const application = new LoginApplication(database)
+    const serverClient = ServerClientExpressAdapter.getInstance()
+    const controller = new LoginController(application, serverClient)
+    controller.execute()
+    app = serverClient.app
+  })
+
+  test("Should be able login", async () => {
+    const input: ILogin = {
+      email: "teste@teste.com",
+      password: "password",
+    }
+    const response = await supertest(app).post("/login").send(input)
+    const data = JSON.parse(response.text)
+    const output: ILoginResponse = {
+      status: "201",
+      message: "success",
+      data: {
+        email: input.email,
+      },
+    }
+    expect(data).toEqual(output)
+  })
+})
 
 describe("GetFoods", () => {
   let app: any

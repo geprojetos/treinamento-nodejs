@@ -1,10 +1,8 @@
-REFATORAÇÃO (foods)
-    - domain pastas conter mesmo nome application
-    - criar domain getFoods
-
-
 FEATURE backend (foods)
-    - criar login com jwt
+    - criar login
+        - validações entrada
+        - criar baseurl json-server
+    - login com jwt
 
 
 FEATURE core
