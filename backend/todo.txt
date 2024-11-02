@@ -1,0 +1,26 @@
+REFATORAÇÃO (foods)
+    - domain pastas conter mesmo nome application
+    - criar domain getFoods
+
+
+FEATURE backend (foods)
+    - criar login com jwt
+
+
+FEATURE core
+    - criar login
+
+
+FEATURE nextjs
+    - criar login
+
+
+FEATURE angular
+    - criar login
+
+
+FEATURE app
+    - criar listagem
+    - criar detalhes
+    - criar remoção
+    - criar login
