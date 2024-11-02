@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "sldobri.bunker",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "bradlc.vscode-tailwindcss",
+    "wix.vscode-import-cost",
+    "oderwat.indent-rainbow",
+    "esbenp.prettier-vscode",
+    "tal7aouy.rainbow-bracket"
+  ]
+}
