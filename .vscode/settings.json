@@ -1,4 +1,28 @@
 {
   "prettier.semi": false,
-  "cSpell.words": ["Avaliable"]
+  "cSpell.words": ["Avaliable"],
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.editor.pinnedTabSizing": "compact",
+  "terminal.integrated.fontFamily": "Fira Code",
+  "terminal.integrated.fontSize": 13,
+  "editor.fontFamily": "Fira Code",
+  "editor.fontSize": 16,
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "400",
+  "editor.lineHeight": 1.7,
+  "workbench.editor.labelFormat": "short",
+  "workbench.sideBar.location": "right",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "workbench.activityBar.location": "bottom",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "typescript.format.semicolons": "remove",
+  "workbench.iconTheme": "dobri-simple-icons",
+  "workbench.colorTheme": "Dobri Next -A01- Dark"
 }
