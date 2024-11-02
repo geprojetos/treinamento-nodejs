@@ -1,4 +1,4 @@
-import { IFoodsGetAllResponse } from "../../3_resources/adapters/HttpClientAxiosAdapter"
+import { IFoodsGetAllResponse } from "../../3_resources/database"
 
 interface IGetFoodTransform {
   response: IFoodsGetAllResponse

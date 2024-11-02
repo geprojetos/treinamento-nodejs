@@ -2,12 +2,12 @@ import supertest from "supertest"
 import FoodsDatabase from "./3_resources/database"
 import GetFoodsApplication from "./2_application/getFoods"
 import GetFoodsController from "./1_drivers/getFoods/GetFoodsController"
+import { IHttpClient } from "./3_resources/adapters/HttpClientAxiosAdapter"
 import {
   IDeleteResponse,
   IFoodCreateResponse,
   IFoodsGetAllResponse,
-  IHttpClient,
-} from "./3_resources/adapters/HttpClientAxiosAdapter"
+} from "./3_resources/database"
 import ServerClientExpressAdapter from "./1_drivers/adapters/ServerClientExpressAdapter"
 import CreateFoodsApplication from "./2_application/createFoods"
 import CreateFoodsController from "./1_drivers/createFoods/CreateFoodsController"

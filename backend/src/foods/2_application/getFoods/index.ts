@@ -1,5 +1,5 @@
 import GetFood from "../../domain/getFood"
-import { IFoodsGetAllResponse } from "../../3_resources/adapters/HttpClientAxiosAdapter"
+import { IFoodsGetAllResponse } from "../../3_resources/database"
 import { IDatabase } from "../../3_resources/database"
 
 class GetFoodsApplication {

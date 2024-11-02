@@ -1,9 +1,28 @@
-import {
-  IDeleteResponse,
-  IFoodCreateResponse,
-  IFoodsGetAllResponse,
-  IHttpClient,
-} from "../adapters/HttpClientAxiosAdapter"
+import { IHttpClient } from "../adapters/HttpClientAxiosAdapter"
+
+interface IFoodsGetAllResponse {
+  status: string
+  message: string
+  data: IFood[]
+}
+
+interface IFood {
+  id: string
+  name: string
+  price: number
+  category: string
+}
+
+interface IFoodCreateResponse {
+  status: string
+  message: string
+  data: Partial<IFood[]>
+}
+
+interface IDeleteResponse {
+  message: string
+  status: string
+}
 
 export interface IDatabase {
   getFoods(): Promise<IFoodsGetAllResponse>
@@ -16,18 +35,35 @@ class FoodsDatabase implements IDatabase {
 
   async deleteFood(input: any): Promise<IDeleteResponse> {
     const response = await this._httpClient.delete(input)
-    return response
+    return {
+      status: String(response.status),
+      message: response.message,
+    }
   }
 
   async createFood(input: any): Promise<IFoodCreateResponse> {
     const response = await this._httpClient.post(input)
-    return response
+    return {
+      status: String(response.status),
+      message: response.message,
+      data: response.data,
+    }
   }
 
   async getFoods(): Promise<IFoodsGetAllResponse> {
     const response = await this._httpClient.get()
-    return response
+    return {
+      status: String(response.status),
+      message: response.message,
+      data: response.data,
+    }
   }
 }
 
 export default FoodsDatabase
+export type {
+  IFoodsGetAllResponse,
+  IFood,
+  IFoodCreateResponse,
+  IDeleteResponse,
+}

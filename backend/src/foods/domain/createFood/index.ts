@@ -1,4 +1,4 @@
-import { IFoodCreateResponse } from "src/foods/3_resources/adapters/HttpClientAxiosAdapter"
+import { IFoodCreateResponse } from "src/foods/3_resources/database"
 
 interface IMessage {
   status: string

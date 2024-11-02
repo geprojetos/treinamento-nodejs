@@ -2,33 +2,9 @@ import axios, { AxiosInstance } from "axios"
 import LoggerPinoAdapter, { ILogger } from "./LoggerPinoAdapter"
 
 interface IHttpClient {
-  get?(): Promise<IFoodsGetAllResponse>
-  post?(input: any): Promise<IFoodCreateResponse>
-  delete?(input: any): Promise<IDeleteResponse>
-}
-
-interface IFoodsGetAllResponse {
-  status: string
-  message: string
-  data: IFood[]
-}
-
-interface IFood {
-  id: string
-  name: string
-  price: number
-  category: string
-}
-
-interface IFoodCreateResponse {
-  status: string
-  message: string
-  data: Partial<IFood[]>
-}
-
-interface IDeleteResponse {
-  message: string
-  status: string
+  get?(): Promise<any>
+  post?(input: any): Promise<any>
+  delete?(input: any): Promise<any>
 }
 
 class HttpClientAxiosAdapter implements IHttpClient {
@@ -42,30 +18,19 @@ class HttpClientAxiosAdapter implements IHttpClient {
     this._interceptor()
   }
 
-  async get(): Promise<IFoodsGetAllResponse> {
+  async get(): Promise<any> {
     const response = await this._axios.get(this._baseUrl)
-    return {
-      status: String(response.status),
-      message: response.statusText,
-      data: response.data,
-    }
+    return response.data
   }
 
-  async post(input: any): Promise<IFoodCreateResponse> {
+  async post(input: any): Promise<any> {
     const response = await this._axios.post(this._baseUrl, input)
-    return {
-      status: String(response.status),
-      message: response.statusText,
-      data: response.data,
-    }
+    return response
   }
 
-  async delete(input: any): Promise<IDeleteResponse> {
+  async delete(input: any): Promise<any> {
     const response = await this._axios.delete(`${this._baseUrl}/${input.id}`)
-    return {
-      status: String(response.status),
-      message: response.statusText,
-    }
+    return response
   }
 
   private _interceptor = () => {
@@ -110,10 +75,4 @@ class HttpClientAxiosAdapter implements IHttpClient {
 }
 
 export default HttpClientAxiosAdapter
-export type {
-  IHttpClient,
-  IFoodsGetAllResponse,
-  IFood,
-  IFoodCreateResponse,
-  IDeleteResponse,
-}
+export type { IHttpClient }
