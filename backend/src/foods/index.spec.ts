@@ -54,7 +54,7 @@ describe("Login", () => {
 
   beforeAll(() => {
     const httpClient: IHttpClient = {
-      post: async (): Promise<any> => {
+      post: async (): Promise<ILoginResponse> => {
         return {
           status: "201",
           message: "success",
@@ -85,6 +85,51 @@ describe("Login", () => {
       data: {
         email: input.email,
       },
+    }
+    expect(data).toEqual(output)
+  })
+
+  test("Should be able invalid login e-mail is incorrect", async () => {
+    const input: ILogin = {
+      email: "test@123",
+      password: "password",
+    }
+    const response = await supertest(app).post("/login").send(input)
+    const data = JSON.parse(response.text)
+    delete data.data
+    const output: ILoginResponse = {
+      status: "404",
+      message: "Invalid email",
+    }
+    expect(data).toEqual(output)
+  })
+
+  test("Should be able invalid login e-mail is required", async () => {
+    const input: ILogin = {
+      email: "",
+      password: "password",
+    }
+    const response = await supertest(app).post("/login").send(input)
+    const data = JSON.parse(response.text)
+    delete data.data
+    const output: ILoginResponse = {
+      status: "404",
+      message: "Invalid email or password",
+    }
+    expect(data).toEqual(output)
+  })
+
+  test("Should be able invalid login password is required", async () => {
+    const input: ILogin = {
+      email: "teste@teste.com",
+      password: "",
+    }
+    const response = await supertest(app).post("/login").send(input)
+    const data = JSON.parse(response.text)
+    delete data.data
+    const output: ILoginResponse = {
+      status: "404",
+      message: "Invalid email or password",
     }
     expect(data).toEqual(output)
   })

@@ -1,6 +1,5 @@
 FEATURE backend (foods)
     - criar login
-        - validações entrada
         - criar baseurl json-server
     - login com jwt
 

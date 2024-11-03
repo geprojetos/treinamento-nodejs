@@ -3,7 +3,7 @@ import { IHttpClient } from "../adapters/HttpClientAxiosAdapter"
 interface ILoginResponse {
   status: string
   message: string
-  data: ILoginData
+  data?: ILoginData
 }
 
 interface ILoginData {
