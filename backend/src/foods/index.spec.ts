@@ -19,6 +19,7 @@ import LoginDatabase, {
 } from "./3_resources/database/LoginDatabase"
 import LoginApplication from "./2_application/login"
 import LoginController from "./1_drivers/login/LoginController"
+import Login from "./domain/login"
 
 class HttpClientMemory implements IHttpClient {
   foods: any
@@ -49,15 +50,19 @@ class HttpClientMemory implements IHttpClient {
   }
 }
 
-describe("Login", () => {
+describe.only("Login", () => {
   let app: any
+  let tokenMock: string
 
   beforeAll(() => {
+    const login = new Login()
+    tokenMock = login.generateToken("teste@teste.com")
     const httpClient: IHttpClient = {
       post: async (): Promise<ILoginResponse> => {
         return {
           status: "201",
           message: "success",
+          token: tokenMock,
           data: {
             email: "teste@teste.com",
           },
@@ -82,6 +87,7 @@ describe("Login", () => {
     const output: ILoginResponse = {
       status: "201",
       message: "success",
+      token: tokenMock,
       data: {
         email: input.email,
       },

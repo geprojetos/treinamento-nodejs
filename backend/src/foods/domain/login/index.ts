@@ -3,6 +3,7 @@ import {
   ILoginResponse,
 } from "../../3_resources/database/LoginDatabase"
 import { validate } from "email-validator"
+import { sign } from "jsonwebtoken"
 
 export default class Login {
   error: ILoginResponse
@@ -23,6 +24,12 @@ export default class Login {
     if (this._getError({ email, password }).isInvalidFormatEmail) {
       return this._isInvalidFormatEmail({ email, password })
     }
+  }
+
+  generateToken(email: string) {
+    const secret = "my-secret"
+    const token = sign({ email }, secret)
+    return token
   }
 
   private _getError({ email, password }: ILogin) {
