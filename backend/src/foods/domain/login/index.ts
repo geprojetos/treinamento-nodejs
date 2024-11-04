@@ -5,6 +5,17 @@ import {
 import { validate } from "email-validator"
 import { sign } from "jsonwebtoken"
 
+interface IUserNotFound {
+  response: ILoginResponse
+  email: string
+  password: string
+}
+
+interface ITransform {
+  response: ILoginResponse
+  email: string
+}
+
 export default class Login {
   error: ILoginResponse
 
@@ -30,6 +41,27 @@ export default class Login {
     const secret = "my-secret"
     const token = sign({ email }, secret)
     return token
+  }
+
+  isUserNotFound({ response, email, password }: IUserNotFound) {
+    const isInvalidLogin = response.data?.some(
+      (item) => item.email !== email || item.password !== password
+    )
+    if (isInvalidLogin) {
+      return {
+        status: "404",
+        message: "Invalid login",
+      }
+    }
+  }
+
+  transform({ response, email }: ITransform): ILoginResponse {
+    return {
+      status: response.status,
+      message: response.message,
+      data: response?.data?.map((user) => ({ email: user.email })),
+      token: this.generateToken(email),
+    }
   }
 
   private _getError({ email, password }: ILogin) {

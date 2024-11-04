@@ -50,22 +50,26 @@ class HttpClientMemory implements IHttpClient {
   }
 }
 
-describe.only("Login", () => {
+describe("Login", () => {
   let app: any
   let tokenMock: string
+  let httpClient: IHttpClient
 
   beforeAll(() => {
     const login = new Login()
     tokenMock = login.generateToken("teste@teste.com")
-    const httpClient: IHttpClient = {
-      post: async (): Promise<ILoginResponse> => {
+    httpClient = {
+      get: async (): Promise<ILoginResponse> => {
         return {
-          status: "201",
+          status: "200",
           message: "success",
           token: tokenMock,
-          data: {
-            email: "teste@teste.com",
-          },
+          data: [
+            {
+              email: "teste@teste.com",
+              password: "password",
+            },
+          ],
         }
       },
     }
@@ -84,13 +88,26 @@ describe.only("Login", () => {
     }
     const response = await supertest(app).post("/login").send(input)
     const data = JSON.parse(response.text)
+    const database: ILoginResponse = await httpClient.get()
     const output: ILoginResponse = {
-      status: "201",
-      message: "success",
-      token: tokenMock,
-      data: {
-        email: input.email,
-      },
+      status: database.status,
+      message: database.message,
+      token: database.token,
+      data: database.data?.map((item) => ({ email: item.email })),
+    }
+    expect(data).toEqual(output)
+  })
+
+  test("Should be able invalid login", async () => {
+    const input: ILogin = {
+      email: "teste@teste.com",
+      password: "password1",
+    }
+    const response = await supertest(app).post("/login").send(input)
+    const data = JSON.parse(response.text)
+    const output: ILoginResponse = {
+      status: "404",
+      message: "Invalid login",
     }
     expect(data).toEqual(output)
   })

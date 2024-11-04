@@ -8,17 +8,16 @@ class LoginApplication {
   constructor(private _database: ILoginDatabase) {}
 
   async execute(req: any): Promise<ILoginResponse> {
-    const { email } = req.body
+    const { email, password } = req.body
     const login = new Login()
     if (login.isInValid(req)?.message?.length > 0) {
       return login.isInValid(req)
     }
-
-    const response = await this._database.create(req.body)
-    return {
-      ...response,
-      token: login.generateToken(email),
+    const response = await this._database.get()
+    if (login.isUserNotFound({ response, email, password })) {
+      return login.isUserNotFound({ response, email, password })
     }
+    return login.transform({ response, email })
   }
 }
 

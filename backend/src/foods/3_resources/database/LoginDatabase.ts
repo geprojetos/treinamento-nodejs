@@ -4,11 +4,12 @@ interface ILoginResponse {
   status: string
   message: string
   token?: string
-  data?: ILoginData
+  data?: ILoginData[]
 }
 
 interface ILoginData {
   email: string
+  password?: string
 }
 
 interface ILogin {
@@ -17,14 +18,15 @@ interface ILogin {
 }
 
 interface ILoginDatabase {
-  create(input: ILogin): Promise<ILoginResponse>
+  get(): Promise<ILoginResponse>
 }
 
 class LoginDatabase implements ILoginDatabase {
   constructor(private _httpClient: IHttpClient) {}
 
-  async create(input: ILogin): Promise<ILoginResponse> {
-    const response = await this._httpClient.post(input)
+  async get(): Promise<ILoginResponse> {
+    const response: ILoginResponse = await this._httpClient.get()
+
     return {
       status: String(response.status),
       message: response.message,
