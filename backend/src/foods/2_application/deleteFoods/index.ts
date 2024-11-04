@@ -1,6 +1,5 @@
-import { IDatabase } from "../../3_resources/database"
-import { IDeleteResponse } from "../../3_resources/adapters/HttpClientAxiosAdapter"
-import DeleteFood from "../../domain/deleteFood"
+import DeleteFood from "../../domain/DeleteFood"
+import { IDatabase, IDeleteResponse } from "../../3_resources/database"
 
 class DeleteFoodsApplication {
   constructor(private _getFoodsDatabase: IDatabase) {}

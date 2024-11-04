@@ -2,6 +2,7 @@ FEATURE backend (foods)
     - criar login
         - criar baseurl json-server
     - login com jwt
+    - tratativa erros
 
 
 FEATURE core

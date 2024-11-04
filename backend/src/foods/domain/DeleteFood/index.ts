@@ -1,4 +1,4 @@
-import { IDeleteResponse } from "src/foods/3_resources/adapters/HttpClientAxiosAdapter"
+import { IDeleteResponse } from "../../3_resources/database"
 
 export default class DeleteFood {
   error: IDeleteResponse = {
