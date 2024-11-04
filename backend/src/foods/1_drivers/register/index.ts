@@ -1,14 +1,14 @@
 import HttpClientAxiosAdapter from "../../3_resources/adapters/HttpClientAxiosAdapter"
-import LoginController from "./LoginController"
 import ServerClientExpressAdapter from "../adapters/ServerClientExpressAdapter"
 import LoginDatabase from "../../3_resources/database/LoginDatabase"
-import LoginApplication from "../../2_application/login"
+import RegisterController from "./RegisterController"
+import RegisterApplication from "../../2_application/registerApplication"
 
 const baseUrl = "http://localhost:3000/users"
 const httpClient = HttpClientAxiosAdapter.getInstance(baseUrl)
 const database = new LoginDatabase(httpClient)
-const application = new LoginApplication(database)
+const application = new RegisterApplication(database)
 const serverClient = ServerClientExpressAdapter.getInstance()
-const controller = new LoginController(application, serverClient)
+const controller = new RegisterController(application, serverClient)
 
 export default controller

@@ -16,10 +16,13 @@ import DeleteFoodsController from "./1_drivers/deleteFoods/DeleteFoodsController
 import LoginDatabase, {
   ILogin,
   ILoginResponse,
+  IRegisterResponse,
 } from "./3_resources/database/LoginDatabase"
 import LoginApplication from "./2_application/login"
 import LoginController from "./1_drivers/login/LoginController"
 import Login from "./domain/login"
+import RegisterApplication from "./2_application/registerApplication"
+import RegisterController from "./1_drivers/register/RegisterController"
 
 class HttpClientMemory implements IHttpClient {
   foods: any
@@ -49,6 +52,105 @@ class HttpClientMemory implements IHttpClient {
     }
   }
 }
+
+describe("Register", () => {
+  let app: any
+  let httpClient: IHttpClient
+
+  beforeAll(() => {
+    httpClient = {
+      get: async (): Promise<ILoginResponse> => {
+        return {
+          status: "200",
+          message: "success",
+          data: [
+            {
+              email: "teste@teste.com",
+              password: "password",
+            },
+          ],
+        }
+      },
+      post: async (): Promise<IRegisterResponse> => {
+        return {
+          status: "201",
+          message: "success",
+          data: {
+            email: "teste@teste.com",
+          },
+        }
+      },
+    }
+    const database = new LoginDatabase(httpClient)
+    const application = new RegisterApplication(database)
+    const serverClient = ServerClientExpressAdapter.getInstance()
+    const controller = new RegisterController(application, serverClient)
+    controller.execute()
+    app = serverClient.app
+  })
+
+  test("Should be able register user", async () => {
+    const input: ILogin = {
+      email: "teste@teste1.com",
+      password: "password",
+    }
+    const response = await supertest(app).post("/register").send(input)
+    const data = JSON.parse(response.text)
+    const database: IRegisterResponse = await httpClient.post(input)
+    const output: IRegisterResponse = {
+      status: database.status,
+      message: database.message,
+      data: {
+        email: database.data?.email,
+      },
+    }
+    expect(data).toEqual(output)
+  })
+
+  test("Should be able error register user, user existing", async () => {
+    const input: ILogin = {
+      email: "teste@teste.com",
+      password: "password",
+    }
+    const response = await supertest(app).post("/register").send(input)
+    const data = JSON.parse(response.text)
+    const output: IRegisterResponse = {
+      status: "400",
+      message: "Invalid register",
+    }
+    expect(data).toEqual(output)
+  })
+
+  test("Should be able invalid login e-mail is required", async () => {
+    const input: ILogin = {
+      email: "",
+      password: "password",
+    }
+    const response = await supertest(app).post("/register").send(input)
+    const data = JSON.parse(response.text)
+    delete data.data
+    const output: ILoginResponse = {
+      status: "400",
+      message: "Invalid email or password",
+    }
+    expect(data).toEqual(output)
+  })
+
+  test("Should be able invalid login password is required", async () => {
+    const input: ILogin = {
+      email: "test@teste.com",
+      password: "",
+    }
+    const response = await supertest(app).post("/register").send(input)
+    const data = JSON.parse(response.text)
+    delete data.data
+    const output: ILoginResponse = {
+      status: "400",
+      message: "Invalid email or password",
+    }
+    expect(data).toEqual(output)
+  })
+})
 
 describe("Login", () => {
   let app: any
@@ -106,7 +208,7 @@ describe("Login", () => {
     const response = await supertest(app).post("/login").send(input)
     const data = JSON.parse(response.text)
     const output: ILoginResponse = {
-      status: "404",
+      status: "400",
       message: "Invalid login",
     }
     expect(data).toEqual(output)
@@ -121,7 +223,7 @@ describe("Login", () => {
     const data = JSON.parse(response.text)
     delete data.data
     const output: ILoginResponse = {
-      status: "404",
+      status: "400",
       message: "Invalid email",
     }
     expect(data).toEqual(output)
@@ -136,7 +238,7 @@ describe("Login", () => {
     const data = JSON.parse(response.text)
     delete data.data
     const output: ILoginResponse = {
-      status: "404",
+      status: "400",
       message: "Invalid email or password",
     }
     expect(data).toEqual(output)
@@ -151,7 +253,7 @@ describe("Login", () => {
     const data = JSON.parse(response.text)
     delete data.data
     const output: ILoginResponse = {
-      status: "404",
+      status: "400",
       message: "Invalid email or password",
     }
     expect(data).toEqual(output)

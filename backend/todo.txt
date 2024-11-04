@@ -1,9 +1,15 @@
-FEATURE backend (foods)
-    - criar login
-        - criar baseurl json-server
-    - login com jwt
-    - tratativa erros
+REFACTOR
+    - refatoração testes
 
+
+FEATURE backend (foods)
+    - tratativa erros
+    - colocar log dos passos realizados
+    - remover log completo dados base dados
+    - criptografia senha ao salvar base dados
+    - adicionar middleware pegar token request
+    - colocar rotas listagem, remoção com autenticação token
+    
 
 FEATURE core
     - criar login

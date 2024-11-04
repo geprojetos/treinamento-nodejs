@@ -49,7 +49,7 @@ export default class Login {
     )
     if (isInvalidLogin) {
       return {
-        status: "404",
+        status: "400",
         message: "Invalid login",
       }
     }
@@ -76,7 +76,7 @@ export default class Login {
   private _isInvalidEmailOrPassword({ email, password }: ILogin) {
     if (!email || !password) {
       return {
-        status: "404",
+        status: "400",
         message: "Invalid email or password",
       }
     }
@@ -85,7 +85,7 @@ export default class Login {
   private _isInvalidFormatEmail({ email, password }: ILogin) {
     if (this._getError({ email, password }).isInvalidFormatEmail) {
       return {
-        status: "404",
+        status: "400",
         message: "Invalid email",
       }
     }

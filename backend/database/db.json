@@ -50,5 +50,12 @@
       "price": 20,
       "category": "secondary"
     }
+  ],
+  "users": [
+    {
+      "email": "teste@teste.com",
+      "password": "password",
+      "id": 1
+    }
   ]
 }
