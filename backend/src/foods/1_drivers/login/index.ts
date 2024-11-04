@@ -4,7 +4,8 @@ import ServerClientExpressAdapter from "../adapters/ServerClientExpressAdapter"
 import LoginDatabase from "../../3_resources/database/LoginDatabase"
 import LoginApplication from "../../2_application/login"
 
-const httpClient = HttpClientAxiosAdapter.getInstance()
+const baseUrl = "http://localhost:3000/login"
+const httpClient = HttpClientAxiosAdapter.getInstance(baseUrl)
 const database = new LoginDatabase(httpClient)
 const application = new LoginApplication(database)
 const serverClient = ServerClientExpressAdapter.getInstance()

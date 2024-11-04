@@ -4,7 +4,8 @@ import ServerClientExpressAdapter from "../adapters/ServerClientExpressAdapter"
 import DeleteFoodsApplication from "../../2_application/deleteFoods"
 import DeleteFoodsController from "./DeleteFoodsController"
 
-const httpClient = HttpClientAxiosAdapter.getInstance()
+const baseURL = "http://localhost:3000/foods-v2"
+const httpClient = HttpClientAxiosAdapter.getInstance(baseURL)
 const database = new FoodsDatabase(httpClient)
 const application = new DeleteFoodsApplication(database)
 const serverClient = ServerClientExpressAdapter.getInstance()

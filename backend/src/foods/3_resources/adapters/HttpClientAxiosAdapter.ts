@@ -12,15 +12,15 @@ class HttpClientAxiosAdapter implements IHttpClient {
   private _axios: AxiosInstance
   static instance: HttpClientAxiosAdapter
 
-  private constructor(private _logger: ILogger) {
-    this._baseUrl = "http://localhost:3000/foods-v2"
+  private constructor(private _logger: ILogger, private _url: string) {
+    this._baseUrl = this._url
     this._axios = axios.create({ baseURL: this._baseUrl })
     this._interceptor()
   }
 
   async get(): Promise<any> {
     const response = await this._axios.get(this._baseUrl)
-    return response.data
+    return response
   }
 
   async post(input: any): Promise<any> {
@@ -64,10 +64,11 @@ class HttpClientAxiosAdapter implements IHttpClient {
     )
   }
 
-  public static getInstance(): HttpClientAxiosAdapter {
+  public static getInstance(url: string): HttpClientAxiosAdapter {
     if (!HttpClientAxiosAdapter.instance) {
       HttpClientAxiosAdapter.instance = new HttpClientAxiosAdapter(
-        new LoggerPinoAdapter()
+        new LoggerPinoAdapter(),
+        url
       )
     }
     return HttpClientAxiosAdapter.instance
