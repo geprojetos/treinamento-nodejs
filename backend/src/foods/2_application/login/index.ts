@@ -6,7 +6,11 @@ import {
 import { ILogger } from "../../3_resources/adapters/LoggerPinoAdapter"
 
 class LoginApplication {
-  constructor(private _database: ILoginDatabase, private _logger: ILogger) {}
+  constructor(
+    private _database: ILoginDatabase,
+    private _logger: ILogger,
+    private _path: string
+  ) {}
 
   async execute(req: any): Promise<ILoginResponse> {
     try {
@@ -16,7 +20,7 @@ class LoginApplication {
       if (login.isInValid(req)?.message?.length > 0) {
         return login.isInValid(req)
       }
-      const response = await this._database.get()
+      const response = await this._database.get(this._path)
       if (login.isUserNotFound({ response, email, password })) {
         return login.isUserNotFound({ response, email, password })
       }

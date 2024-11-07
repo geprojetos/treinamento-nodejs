@@ -3,7 +3,11 @@ import { IDatabase } from "../../3_resources/database"
 import CreateFood from "../../domain/createFood"
 
 class CreateFoodsApplication {
-  constructor(private _getFoodsDatabase: IDatabase, private _logger: ILogger) {}
+  constructor(
+    private _getFoodsDatabase: IDatabase,
+    private _logger: ILogger,
+    private _path: string
+  ) {}
 
   async execute(req: any): Promise<any> {
     try {
@@ -16,11 +20,14 @@ class CreateFoodsApplication {
         return food.error
       }
 
-      return await this._getFoodsDatabase.createFood({
-        name,
-        price,
-        category,
-      })
+      return await this._getFoodsDatabase.createFood(
+        {
+          name,
+          price,
+          category,
+        },
+        this._path
+      )
     } catch (error) {
       this._logger.info(
         `CreateFoodsApplication - Error execute ${error.message}`

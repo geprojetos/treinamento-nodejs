@@ -6,7 +6,11 @@ import {
 import { ILogger } from "../../3_resources/adapters/LoggerPinoAdapter"
 
 class RegisterApplication {
-  constructor(private _database: ILoginDatabase, private _logger: ILogger) {}
+  constructor(
+    private _database: ILoginDatabase,
+    private _logger: ILogger,
+    private _path: string
+  ) {}
 
   async execute(req: any): Promise<IRegisterResponse> {
     try {
@@ -17,7 +21,7 @@ class RegisterApplication {
         return login.isInValid(req)
       }
 
-      const getUserResponse = await this._database.get()
+      const getUserResponse = await this._database.get(this._path)
       const isExisting = getUserResponse?.data?.filter(
         (user) => user.email === email
       )
@@ -28,7 +32,7 @@ class RegisterApplication {
         }
       }
 
-      const response = await this._database.post(req.body)
+      const response = await this._database.post(req.body, this._path)
       return response
     } catch (error) {
       this._logger.info(`RegisterApplication - Error execute ${error.message}`)

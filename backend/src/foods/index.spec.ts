@@ -55,6 +55,7 @@ class HttpClientMemory implements IHttpClient {
 }
 
 describe("Register", () => {
+  const path = "test"
   let app: any
   let httpClient: IHttpClient
 
@@ -84,7 +85,7 @@ describe("Register", () => {
     }
     const logger = new LoggerPinoAdapter()
     const database = new LoginDatabase(httpClient, logger)
-    const application = new RegisterApplication(database, logger)
+    const application = new RegisterApplication(database, logger, path)
     const serverClient = ServerClientExpressAdapter.getInstance()
     const controller = new RegisterController(application, serverClient)
     controller.execute()
@@ -98,7 +99,7 @@ describe("Register", () => {
     }
     const response = await supertest(app).post("/register").send(input)
     const data = JSON.parse(response.text)
-    const database: IRegisterResponse = await httpClient.post(input)
+    const database: IRegisterResponse = await httpClient.post(input, path)
     const output: IRegisterResponse = {
       status: database.status,
       message: database.message,
@@ -155,6 +156,7 @@ describe("Register", () => {
 })
 
 describe("Login", () => {
+  const path = "test"
   let app: any
   let tokenMock: string
   let httpClient: IHttpClient
@@ -179,7 +181,7 @@ describe("Login", () => {
     }
     const logger = new LoggerPinoAdapter()
     const database = new LoginDatabase(httpClient, logger)
-    const application = new LoginApplication(database, logger)
+    const application = new LoginApplication(database, logger, path)
     const serverClient = ServerClientExpressAdapter.getInstance()
     const controller = new LoginController(application, serverClient)
     controller.execute()
@@ -193,7 +195,7 @@ describe("Login", () => {
     }
     const response = await supertest(app).post("/login").send(input)
     const data = JSON.parse(response.text)
-    const database: ILoginResponse = await httpClient.get()
+    const database: ILoginResponse = await httpClient.get(path)
     const output: ILoginResponse = {
       status: database.status,
       message: database.message,
@@ -264,6 +266,7 @@ describe("Login", () => {
 })
 
 describe("GetFoods", () => {
+  const path = "test"
   const mockData: IFoodsGetAllResponse = {
     status: "200",
     message: "success",
@@ -291,7 +294,7 @@ describe("GetFoods", () => {
     }
     const logger = new LoggerPinoAdapter()
     const database = new FoodsDatabase(httpClient, logger)
-    const application = new GetFoodsApplication(database, logger)
+    const application = new GetFoodsApplication(database, logger, path)
     const serverClient = ServerClientExpressAdapter.getInstance()
     const controller = new GetFoodsController(application, serverClient)
     controller.execute()
@@ -331,13 +334,14 @@ describe("GetFoods", () => {
 })
 
 describe("CreateFoods", () => {
+  const path = "test"
   let app: any
 
   beforeAll(() => {
     const httpClient = new HttpClientMemory()
     const logger = new LoggerPinoAdapter()
     const database = new FoodsDatabase(httpClient, logger)
-    const application = new CreateFoodsApplication(database, logger)
+    const application = new CreateFoodsApplication(database, logger, path)
     const serverClient = ServerClientExpressAdapter.getInstance()
     const controller = new CreateFoodsController(application, serverClient)
     controller.execute()
@@ -407,13 +411,14 @@ describe("CreateFoods", () => {
 })
 
 describe("DeleteFoods", () => {
+  const path = "test"
   let app: any
 
   beforeAll(() => {
     const httpClient = new HttpClientMemory()
     const logger = new LoggerPinoAdapter()
     const database = new FoodsDatabase(httpClient, logger)
-    const application = new DeleteFoodsApplication(database, logger)
+    const application = new DeleteFoodsApplication(database, logger, path)
     const serverClient = ServerClientExpressAdapter.getInstance()
     const controller = new DeleteFoodsController(application, serverClient)
     controller.execute()

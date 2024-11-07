@@ -2,9 +2,9 @@ import axios, { AxiosInstance } from "axios"
 import LoggerPinoAdapter, { ILogger } from "./LoggerPinoAdapter"
 
 interface IHttpClient {
-  get?(): Promise<any>
-  post?(input: any): Promise<any>
-  delete?(input: any): Promise<any>
+  get?(path: string): Promise<any>
+  post?(input: any, path: string): Promise<any>
+  delete?(input: any, path: string): Promise<any>
 }
 
 class HttpClientAxiosAdapter implements IHttpClient {
@@ -18,18 +18,20 @@ class HttpClientAxiosAdapter implements IHttpClient {
     this._interceptor()
   }
 
-  async get(): Promise<any> {
-    const response = await this._axios.get(this._baseUrl)
+  async get(path: string): Promise<any> {
+    const response = await this._axios.get(`${this._baseUrl}${path}`)
     return response
   }
 
-  async post(input: any): Promise<any> {
-    const response = await this._axios.post(this._baseUrl, input)
+  async post(input: any, path: string): Promise<any> {
+    const response = await this._axios.post(`${this._baseUrl}${path}`, input)
     return response
   }
 
-  async delete(input: any): Promise<any> {
-    const response = await this._axios.delete(`${this._baseUrl}/${input.id}`)
+  async delete(input: any, path: string): Promise<any> {
+    const response = await this._axios.delete(
+      `${this._baseUrl}${path}/${input.id}`
+    )
     return response
   }
 
@@ -53,7 +55,7 @@ class HttpClientAxiosAdapter implements IHttpClient {
     this._axios.interceptors.response.use(
       (response) => {
         const logs = {
-          data: response.data,
+          urlService: response.config.baseURL,
         }
         this._logger.info({ Response: logs })
         return response

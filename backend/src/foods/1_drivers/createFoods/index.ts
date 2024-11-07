@@ -5,11 +5,12 @@ import ServerClientExpressAdapter from "../adapters/ServerClientExpressAdapter"
 import CreateFoodsApplication from "../../2_application/createFoods"
 import LoggerPinoAdapter from "../../3_resources/adapters/LoggerPinoAdapter"
 
-const baseURL = "http://localhost:3000/foods-v2"
+const baseURL = "http://localhost:3000"
+const path = "/foods-v2"
 const httpClient = HttpClientAxiosAdapter.getInstance(baseURL)
 const logger = new LoggerPinoAdapter()
 const database = new FoodsDatabase(httpClient, logger)
-const application = new CreateFoodsApplication(database, logger)
+const application = new CreateFoodsApplication(database, logger, path)
 const serverClient = ServerClientExpressAdapter.getInstance()
 const controller = new CreateFoodsController(application, serverClient)
 

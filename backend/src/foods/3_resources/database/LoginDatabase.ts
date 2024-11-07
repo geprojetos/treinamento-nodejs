@@ -25,17 +25,20 @@ interface ILogin {
 }
 
 interface ILoginDatabase {
-  get(): Promise<ILoginResponse>
-  post(input: ILogin): Promise<IRegisterResponse>
+  get(path: string): Promise<ILoginResponse>
+  post(input: ILogin, path: string): Promise<IRegisterResponse>
 }
 
 class LoginDatabase implements ILoginDatabase {
   constructor(private _httpClient: IHttpClient, private _logger: ILogger) {}
 
-  async post(input: ILogin): Promise<IRegisterResponse> {
+  async post(input: ILogin, path: string): Promise<IRegisterResponse> {
     try {
       this._logger.info(`LoginDatabase - Create user ${input}`)
-      const response: IRegisterResponse = await this._httpClient.post(input)
+      const response: IRegisterResponse = await this._httpClient.post(
+        input,
+        path
+      )
       return {
         status: String(response.status),
         message: response.message,
@@ -46,8 +49,8 @@ class LoginDatabase implements ILoginDatabase {
     }
   }
 
-  async get(): Promise<ILoginResponse> {
-    const response: ILoginResponse = await this._httpClient.get()
+  async get(path: string): Promise<ILoginResponse> {
+    const response: ILoginResponse = await this._httpClient.get(path)
 
     return {
       status: String(response.status),
