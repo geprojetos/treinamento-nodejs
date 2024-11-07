@@ -261,6 +261,15 @@ describe("Login", () => {
 })
 
 describe("GetFoods", () => {
+  const mockData: IFoodsGetAllResponse = {
+    status: "200",
+    message: "success",
+    data: [
+      { id: "1", name: "Macarronada", price: 13.75, category: "main" },
+      { id: "2", name: "File de frango", price: 11, category: "main" },
+      { id: "3", name: "Sorvete", price: 22, category: "secondary" },
+    ],
+  }
   let app: any
 
   beforeAll(() => {
@@ -288,16 +297,7 @@ describe("GetFoods", () => {
   test("Should be able get all foods", async () => {
     const response = await supertest(app).get("/foods")
     const data = JSON.parse(response.text)
-    const output: IFoodsGetAllResponse = {
-      status: "200",
-      message: "success",
-      data: [
-        { id: "1", name: "Macarronada", price: 13.75, category: "main" },
-        { id: "2", name: "File de frango", price: 11, category: "main" },
-        { id: "3", name: "Sorvete", price: 22, category: "secondary" },
-      ],
-    }
-
+    const output: IFoodsGetAllResponse = mockData
     expect(data).toEqual(output)
   })
 
@@ -307,12 +307,8 @@ describe("GetFoods", () => {
       .query({ category: "main" })
     const data = JSON.parse(response.text)
     const output: IFoodsGetAllResponse = {
-      status: "200",
-      message: "success",
-      data: [
-        { id: "1", name: "Macarronada", price: 13.75, category: "main" },
-        { id: "2", name: "File de frango", price: 11, category: "main" },
-      ],
+      ...mockData,
+      data: mockData.data.filter((food) => food.category === "main"),
     }
     expect(data).toEqual(output)
   })
@@ -323,9 +319,8 @@ describe("GetFoods", () => {
       .query({ category: "secondary" })
     const data = JSON.parse(response.text)
     const output: IFoodsGetAllResponse = {
-      status: "200",
-      message: "success",
-      data: [{ id: "3", name: "Sorvete", price: 22, category: "secondary" }],
+      ...mockData,
+      data: mockData.data.filter((food) => food.category === "secondary"),
     }
     expect(data).toEqual(output)
   })
