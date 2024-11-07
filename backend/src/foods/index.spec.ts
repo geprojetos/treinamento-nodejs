@@ -23,6 +23,7 @@ import LoginController from "./1_drivers/login/LoginController"
 import Login from "./domain/login"
 import RegisterApplication from "./2_application/registerApplication"
 import RegisterController from "./1_drivers/register/RegisterController"
+import LoggerPinoAdapter from "./3_resources/adapters/LoggerPinoAdapter"
 
 class HttpClientMemory implements IHttpClient {
   foods: any
@@ -81,8 +82,9 @@ describe("Register", () => {
         }
       },
     }
-    const database = new LoginDatabase(httpClient)
-    const application = new RegisterApplication(database)
+    const logger = new LoggerPinoAdapter()
+    const database = new LoginDatabase(httpClient, logger)
+    const application = new RegisterApplication(database, logger)
     const serverClient = ServerClientExpressAdapter.getInstance()
     const controller = new RegisterController(application, serverClient)
     controller.execute()
@@ -175,8 +177,9 @@ describe("Login", () => {
         }
       },
     }
-    const database = new LoginDatabase(httpClient)
-    const application = new LoginApplication(database)
+    const logger = new LoggerPinoAdapter()
+    const database = new LoginDatabase(httpClient, logger)
+    const application = new LoginApplication(database, logger)
     const serverClient = ServerClientExpressAdapter.getInstance()
     const controller = new LoginController(application, serverClient)
     controller.execute()
@@ -286,8 +289,9 @@ describe("GetFoods", () => {
         }
       },
     }
-    const database = new FoodsDatabase(httpClient)
-    const application = new GetFoodsApplication(database)
+    const logger = new LoggerPinoAdapter()
+    const database = new FoodsDatabase(httpClient, logger)
+    const application = new GetFoodsApplication(database, logger)
     const serverClient = ServerClientExpressAdapter.getInstance()
     const controller = new GetFoodsController(application, serverClient)
     controller.execute()
@@ -331,8 +335,9 @@ describe("CreateFoods", () => {
 
   beforeAll(() => {
     const httpClient = new HttpClientMemory()
-    const database = new FoodsDatabase(httpClient)
-    const application = new CreateFoodsApplication(database)
+    const logger = new LoggerPinoAdapter()
+    const database = new FoodsDatabase(httpClient, logger)
+    const application = new CreateFoodsApplication(database, logger)
     const serverClient = ServerClientExpressAdapter.getInstance()
     const controller = new CreateFoodsController(application, serverClient)
     controller.execute()
@@ -406,8 +411,9 @@ describe("DeleteFoods", () => {
 
   beforeAll(() => {
     const httpClient = new HttpClientMemory()
-    const database = new FoodsDatabase(httpClient)
-    const application = new DeleteFoodsApplication(database)
+    const logger = new LoggerPinoAdapter()
+    const database = new FoodsDatabase(httpClient, logger)
+    const application = new DeleteFoodsApplication(database, logger)
     const serverClient = ServerClientExpressAdapter.getInstance()
     const controller = new DeleteFoodsController(application, serverClient)
     controller.execute()

@@ -1,5 +1,5 @@
 import { IHttpClient } from "../adapters/HttpClientAxiosAdapter"
-import LoggerPinoAdapter from "../adapters/LoggerPinoAdapter"
+import { ILogger } from "../adapters/LoggerPinoAdapter"
 
 interface ILoginResponse {
   status: string
@@ -30,15 +30,11 @@ interface ILoginDatabase {
 }
 
 class LoginDatabase implements ILoginDatabase {
-  private _loggerPinoAdapter: LoggerPinoAdapter
-
-  constructor(private _httpClient: IHttpClient) {
-    this._loggerPinoAdapter = new LoggerPinoAdapter()
-  }
+  constructor(private _httpClient: IHttpClient, private _logger: ILogger) {}
 
   async post(input: ILogin): Promise<IRegisterResponse> {
     try {
-      this._loggerPinoAdapter.info(`LoginDatabase - Create user ${input}`)
+      this._logger.info(`LoginDatabase - Create user ${input}`)
       const response: IRegisterResponse = await this._httpClient.post(input)
       return {
         status: String(response.status),
@@ -46,9 +42,7 @@ class LoginDatabase implements ILoginDatabase {
         data: response.data,
       }
     } catch (error) {
-      this._loggerPinoAdapter.info(
-        `LoginDatabase - Error create user ${error.message}`
-      )
+      this._logger.info(`LoginDatabase - Error create user ${error.message}`)
     }
   }
 

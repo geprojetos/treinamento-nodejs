@@ -1,23 +1,31 @@
+import { ILogger } from "../../3_resources/adapters/LoggerPinoAdapter"
 import { IDatabase } from "../../3_resources/database"
 import CreateFood from "../../domain/createFood"
 
 class CreateFoodsApplication {
-  constructor(private _getFoodsDatabase: IDatabase) {}
+  constructor(private _getFoodsDatabase: IDatabase, private _logger: ILogger) {}
 
   async execute(req: any): Promise<any> {
-    const { body } = req
-    const { name, price, category } = body
-    const food = new CreateFood(name, price, category)
+    try {
+      this._logger.info(`CreateFoodsApplication - execute ${req.body}`)
+      const { body } = req
+      const { name, price, category } = body
+      const food = new CreateFood(name, price, category)
 
-    if (food.error.message.length) {
-      return food.error
+      if (food.error.message.length) {
+        return food.error
+      }
+
+      return await this._getFoodsDatabase.createFood({
+        name,
+        price,
+        category,
+      })
+    } catch (error) {
+      this._logger.info(
+        `CreateFoodsApplication - Error execute ${error.message}`
+      )
     }
-
-    return await this._getFoodsDatabase.createFood({
-      name,
-      price,
-      category,
-    })
   }
 }
 

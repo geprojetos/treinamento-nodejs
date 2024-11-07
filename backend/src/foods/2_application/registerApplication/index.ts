@@ -3,30 +3,36 @@ import {
   ILoginDatabase,
   IRegisterResponse,
 } from "../../3_resources/database/LoginDatabase"
+import { ILogger } from "../../3_resources/adapters/LoggerPinoAdapter"
 
 class RegisterApplication {
-  constructor(private _database: ILoginDatabase) {}
+  constructor(private _database: ILoginDatabase, private _logger: ILogger) {}
 
   async execute(req: any): Promise<IRegisterResponse> {
-    const { email } = req.body
-    const login = new Login()
-    if (login.isInValid(req)?.message?.length > 0) {
-      return login.isInValid(req)
-    }
-
-    const getUserResponse = await this._database.get()
-    const isExisting = getUserResponse?.data?.filter(
-      (user) => user.email === email
-    )
-    if (isExisting.length > 0) {
-      return {
-        status: "400",
-        message: "Invalid register",
+    try {
+      this._logger.info(`RegisterApplication - execute ${req.body}`)
+      const { email } = req.body
+      const login = new Login()
+      if (login.isInValid(req)?.message?.length > 0) {
+        return login.isInValid(req)
       }
-    }
 
-    const response = await this._database.post(req.body)
-    return response
+      const getUserResponse = await this._database.get()
+      const isExisting = getUserResponse?.data?.filter(
+        (user) => user.email === email
+      )
+      if (isExisting.length > 0) {
+        return {
+          status: "400",
+          message: "Invalid register",
+        }
+      }
+
+      const response = await this._database.post(req.body)
+      return response
+    } catch (error) {
+      this._logger.info(`RegisterApplication - Error execute ${error.message}`)
+    }
   }
 }
 
