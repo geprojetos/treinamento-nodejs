@@ -1,4 +1,5 @@
 import { IHttpClient } from "../adapters/HttpClientAxiosAdapter"
+import LoggerPinoAdapter from "../adapters/LoggerPinoAdapter"
 
 interface IFoodsGetAllResponse {
   status: string
@@ -31,31 +32,56 @@ export interface IDatabase {
 }
 
 class FoodsDatabase implements IDatabase {
-  constructor(private _httpClient: IHttpClient) {}
+  private _loggerPinoAdapter: LoggerPinoAdapter
+
+  constructor(private _httpClient: IHttpClient) {
+    this._loggerPinoAdapter = new LoggerPinoAdapter()
+  }
 
   async deleteFood(input: any): Promise<IDeleteResponse> {
-    const response = await this._httpClient.delete(input)
-    return {
-      status: String(response.status),
-      message: response.message,
+    try {
+      this._loggerPinoAdapter.info(`FoodsDatabase - Delete food ${input}`)
+      const response = await this._httpClient.delete(input)
+      return {
+        status: String(response.status),
+        message: response.message,
+      }
+    } catch (error) {
+      this._loggerPinoAdapter.info(
+        `FoodsDatabase - Error delete food ${error.message}`
+      )
     }
   }
 
   async createFood(input: any): Promise<IFoodCreateResponse> {
-    const response = await this._httpClient.post(input)
-    return {
-      status: String(response.status),
-      message: response.message,
-      data: response.data,
+    try {
+      this._loggerPinoAdapter.info(`FoodsDatabase - Create food ${input}`)
+      const response = await this._httpClient.post(input)
+      return {
+        status: String(response.status),
+        message: response.message,
+        data: response.data,
+      }
+    } catch (error) {
+      this._loggerPinoAdapter.info(
+        `FoodsDatabase - Error create food ${error.message}`
+      )
     }
   }
 
   async getFoods(): Promise<IFoodsGetAllResponse> {
-    const response = await this._httpClient.get()
-    return {
-      status: String(response.status),
-      message: response.message,
-      data: response.data,
+    try {
+      this._loggerPinoAdapter.info(`FoodsDatabase - get food`)
+      const response = await this._httpClient.get()
+      return {
+        status: String(response.status),
+        message: response.message,
+        data: response.data,
+      }
+    } catch (error) {
+      this._loggerPinoAdapter.info(
+        `FoodsDatabase - Error get food ${error.message}`
+      )
     }
   }
 }
