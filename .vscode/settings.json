@@ -24,5 +24,8 @@
   },
   "typescript.format.semicolons": "remove",
   "workbench.iconTheme": "dobri-simple-icons",
-  "workbench.colorTheme": "Dobri Next -A01- Dark"
+  "workbench.colorTheme": "Dobri Next -A01- Dark",
+  "workbench.colorCustomizations": {
+    "list.inactiveSelectionBackground": "#464444"
+  }
 }

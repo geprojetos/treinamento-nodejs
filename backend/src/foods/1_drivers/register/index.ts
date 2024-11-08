@@ -12,6 +12,6 @@ const logger = new LoggerPinoAdapter()
 const database = new LoginDatabase(httpClient, logger)
 const application = new RegisterApplication(database, logger, path)
 const serverClient = ServerClientExpressAdapter.getInstance()
-const controller = new RegisterController(application, serverClient)
+const controller = new RegisterController(application, serverClient, logger)
 
 export default controller

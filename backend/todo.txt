@@ -1,7 +1,4 @@
 FEATURE backend (foods)
-    - tratativa erros
-    - colocar log dos passos realizados
-    - remover log completo dados base dados
     - criptografia senha ao salvar base dados
     - adicionar middleware pegar token request
     - colocar rotas listagem, remoção com autenticação token

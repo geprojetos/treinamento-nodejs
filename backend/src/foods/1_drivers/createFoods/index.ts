@@ -12,6 +12,6 @@ const logger = new LoggerPinoAdapter()
 const database = new FoodsDatabase(httpClient, logger)
 const application = new CreateFoodsApplication(database, logger, path)
 const serverClient = ServerClientExpressAdapter.getInstance()
-const controller = new CreateFoodsController(application, serverClient)
+const controller = new CreateFoodsController(application, serverClient, logger)
 
 export default controller

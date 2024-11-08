@@ -87,7 +87,7 @@ describe("Register", () => {
     const database = new LoginDatabase(httpClient, logger)
     const application = new RegisterApplication(database, logger, path)
     const serverClient = ServerClientExpressAdapter.getInstance()
-    const controller = new RegisterController(application, serverClient)
+    const controller = new RegisterController(application, serverClient, logger)
     controller.execute()
     app = serverClient.app
   })
@@ -183,7 +183,7 @@ describe("Login", () => {
     const database = new LoginDatabase(httpClient, logger)
     const application = new LoginApplication(database, logger, path)
     const serverClient = ServerClientExpressAdapter.getInstance()
-    const controller = new LoginController(application, serverClient)
+    const controller = new LoginController(application, serverClient, logger)
     controller.execute()
     app = serverClient.app
   })
@@ -296,7 +296,7 @@ describe("GetFoods", () => {
     const database = new FoodsDatabase(httpClient, logger)
     const application = new GetFoodsApplication(database, logger, path)
     const serverClient = ServerClientExpressAdapter.getInstance()
-    const controller = new GetFoodsController(application, serverClient)
+    const controller = new GetFoodsController(application, serverClient, logger)
     controller.execute()
     app = serverClient.app
   })
@@ -343,7 +343,11 @@ describe("CreateFoods", () => {
     const database = new FoodsDatabase(httpClient, logger)
     const application = new CreateFoodsApplication(database, logger, path)
     const serverClient = ServerClientExpressAdapter.getInstance()
-    const controller = new CreateFoodsController(application, serverClient)
+    const controller = new CreateFoodsController(
+      application,
+      serverClient,
+      logger
+    )
     controller.execute()
     app = serverClient.app
   })
@@ -420,7 +424,11 @@ describe("DeleteFoods", () => {
     const database = new FoodsDatabase(httpClient, logger)
     const application = new DeleteFoodsApplication(database, logger, path)
     const serverClient = ServerClientExpressAdapter.getInstance()
-    const controller = new DeleteFoodsController(application, serverClient)
+    const controller = new DeleteFoodsController(
+      application,
+      serverClient,
+      logger
+    )
     controller.execute()
     app = serverClient.app
   })
