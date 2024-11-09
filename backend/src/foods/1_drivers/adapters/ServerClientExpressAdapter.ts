@@ -1,6 +1,7 @@
 import express, { Express, NextFunction, Request, Response } from "express"
 import cors from "cors"
 import { verify } from "jsonwebtoken"
+import config from "../../config"
 
 interface IServerClient {
   get(url: string, callback: (req: any, res: any) => Promise<any>): void
@@ -27,8 +28,8 @@ class ServerClientExpressAdapter implements IServerClient {
     next: NextFunction
   ) {
     const token = request.headers["authorization"].split(" ")[1]
-    verify(token, "my-secret", function (error, _decoded) {
-      if (error) {
+    verify(token, config.secretToken, function (error, _decoded) {
+      if (config.isEnableTokenValidation && error) {
         response.json({
           status: "401",
           message: "Invalid token",

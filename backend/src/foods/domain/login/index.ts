@@ -5,6 +5,7 @@ import {
 import { validate } from "email-validator"
 import { sign } from "jsonwebtoken"
 import { compareSync } from "bcrypt"
+import config from "../../config"
 
 interface IUserNotFound {
   response: ILoginResponse
@@ -39,8 +40,7 @@ export default class Login {
   }
 
   generateToken(email: string) {
-    const secret = "my-secret"
-    const token = sign({ email }, secret)
+    const token = sign({ email }, config.secretToken)
     return token
   }
 
