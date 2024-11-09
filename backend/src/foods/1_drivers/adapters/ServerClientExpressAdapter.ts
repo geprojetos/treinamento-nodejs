@@ -1,5 +1,6 @@
-import express, { Express } from "express"
+import express, { Express, NextFunction, Request, Response } from "express"
 import cors from "cors"
+import { verify } from "jsonwebtoken"
 
 interface IServerClient {
   get(url: string, callback: (req: any, res: any) => Promise<any>): void
@@ -17,6 +18,25 @@ class ServerClientExpressAdapter implements IServerClient {
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
     this.app.use(cors())
+    this.app.use("/foods", this._validationToken)
+  }
+
+  private _validationToken(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    const token = request.headers["authorization"].split(" ")[1]
+    verify(token, "my-secret", function (error, _decoded) {
+      if (error) {
+        response.json({
+          status: "401",
+          message: "Invalid token",
+        })
+        return
+      }
+      next()
+    })
   }
 
   delete(url: string, callback: (req: any, res: any) => Promise<any>): void {

@@ -53,6 +53,9 @@ class HttpClientMemory implements IHttpClient {
     }
   }
 }
+let tokenMock: string
+const login = new Login()
+tokenMock = login.generateToken("teste@teste.com")
 
 describe("Register", () => {
   const path = "test"
@@ -158,12 +161,9 @@ describe("Register", () => {
 describe("Login", () => {
   const path = "test"
   let app: any
-  let tokenMock: string
   let httpClient: IHttpClient
 
   beforeAll(() => {
-    const login = new Login()
-    tokenMock = login.generateToken("teste@teste.com")
     const password = hashSync("password", 3)
     httpClient = {
       get: async (): Promise<ILoginResponse> => {
@@ -303,7 +303,9 @@ describe("GetFoods", () => {
   })
 
   test("Should be able get all foods", async () => {
-    const response = await supertest(app).get("/foods")
+    const response = await supertest(app)
+      .get("/foods")
+      .set("authorization", `Bearer ${tokenMock}`)
     const data = JSON.parse(response.text)
     const output: IFoodsGetAllResponse = mockData
     expect(data).toEqual(output)
@@ -312,6 +314,7 @@ describe("GetFoods", () => {
   test("Should be able get foods category main", async () => {
     const response = await supertest(app)
       .get("/foods")
+      .set("authorization", `Bearer ${tokenMock}`)
       .query({ category: "main" })
     const data = JSON.parse(response.text)
     const output: IFoodsGetAllResponse = {
@@ -325,6 +328,8 @@ describe("GetFoods", () => {
     const response = await supertest(app)
       .get("/foods")
       .query({ category: "secondary" })
+      .set("authorization", `Bearer ${tokenMock}`)
+
     const data = JSON.parse(response.text)
     const output: IFoodsGetAllResponse = {
       ...mockData,
@@ -359,6 +364,7 @@ describe("CreateFoods", () => {
       .send({ name: "Contra filé", price: 20, category: "main" })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
+      .set("authorization", `Bearer ${tokenMock}`)
 
     const data = response.body
     const output = {
@@ -375,6 +381,7 @@ describe("CreateFoods", () => {
       .send({ name: "", price: 20, category: "main" })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
+      .set("authorization", `Bearer ${tokenMock}`)
 
     const data = response.body
     const output = {
@@ -390,6 +397,7 @@ describe("CreateFoods", () => {
       .send({ name: "Salmão", category: "main" })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
+      .set("authorization", `Bearer ${tokenMock}`)
 
     const data = response.body
     const output = {
@@ -405,6 +413,7 @@ describe("CreateFoods", () => {
       .send({ name: "Salmão", price: 50, category: "" })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
+      .set("authorization", `Bearer ${tokenMock}`)
 
     const data = response.body
     const output = {
@@ -435,7 +444,10 @@ describe("DeleteFoods", () => {
   })
 
   test("Should be able error delete food id is required", async () => {
-    const response = await supertest(app).delete("/foods").query({ id: "test" })
+    const response = await supertest(app)
+      .delete("/foods")
+      .query({ id: "test" })
+      .set("authorization", `Bearer ${tokenMock}`)
 
     const data = response.body
     const output: IDeleteResponse = {
@@ -451,6 +463,7 @@ describe("DeleteFoods", () => {
       .query({ id: "" })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
+      .set("authorization", `Bearer ${tokenMock}`)
 
     const data = response.body
     const output: IDeleteResponse = {

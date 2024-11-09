@@ -1,7 +1,5 @@
 FEATURE backend (foods)
-    - criptografia senha ao salvar base dados
-    - adicionar middleware pegar token request
-    - colocar rotas listagem, remoção com autenticação token
+    - criar configuração para variável
     
 
 FEATURE core
