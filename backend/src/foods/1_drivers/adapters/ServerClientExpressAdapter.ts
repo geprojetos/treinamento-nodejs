@@ -16,6 +16,10 @@ class ServerClientExpressAdapter implements IServerClient {
 
   private constructor() {
     this.app = express()
+    this._middlewares()
+  }
+
+  private _middlewares() {
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
     this.app.use(cors())

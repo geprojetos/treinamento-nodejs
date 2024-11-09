@@ -1,5 +1,4 @@
 FEATURE backend (foods)
-    - criar configuração para variável
     
 
 FEATURE core

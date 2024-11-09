@@ -4,7 +4,7 @@ import registerController from "./register/"
 import getFoodsController from "./getFoods"
 import createFoodsController from "./createFoods"
 import deleteFoodsController from "./deleteFoods"
-const port = 3001
+import config from "../config"
 const serverClient = ServerClientExpressAdapter.getInstance()
 
 getFoodsController.execute()
@@ -13,6 +13,6 @@ deleteFoodsController.execute()
 loginController.execute()
 registerController.execute()
 
-serverClient.listen(port, () =>
-  console.log(`Server is running http://localhost:${port}`)
+serverClient.listen(config.port, () =>
+  console.log(`Server is running http://localhost:${config.port}`)
 )
