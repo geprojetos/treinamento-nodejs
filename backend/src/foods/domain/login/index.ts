@@ -4,6 +4,7 @@ import {
 } from "../../3_resources/database/LoginDatabase"
 import { validate } from "email-validator"
 import { sign } from "jsonwebtoken"
+import { compareSync } from "bcrypt"
 
 interface IUserNotFound {
   response: ILoginResponse
@@ -44,9 +45,9 @@ export default class Login {
   }
 
   isUserNotFound({ response, email, password }: IUserNotFound) {
-    const isInvalidLogin = response.data?.some(
-      (item) => item.email !== email || item.password !== password
-    )
+    const isUser = response?.data?.filter((user) => user.email === email)[0]
+    const isValidPassword = compareSync(password, isUser.password)
+    const isInvalidLogin = isUser.email !== email || !isValidPassword
     if (isInvalidLogin) {
       return {
         status: "400",
@@ -59,7 +60,9 @@ export default class Login {
     return {
       status: response.status,
       message: response.message,
-      data: response?.data?.map((user) => ({ email: user.email })),
+      data: response?.data
+        ?.filter((user) => user.email === email)
+        ?.map((user) => ({ email: user.email })),
       token: this.generateToken(email),
     }
   }

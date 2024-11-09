@@ -4,7 +4,7 @@ import {
   IRegisterResponse,
 } from "../../3_resources/database/LoginDatabase"
 import { ILogger } from "../../3_resources/adapters/LoggerPinoAdapter"
-
+import { hashSync } from "bcrypt"
 class RegisterApplication {
   constructor(
     private _database: ILoginDatabase,
@@ -14,8 +14,8 @@ class RegisterApplication {
 
   async execute(req: any): Promise<IRegisterResponse> {
     try {
-      this._logger.info(`RegisterApplication - execute ${req.body}`)
-      const { email } = req.body
+      this._logger.info(`RegisterApplication - execute`)
+      const { email, password } = req.body
       const login = new Login()
       if (login.isInValid(req)?.message?.length > 0) {
         return login.isInValid(req)
@@ -31,8 +31,14 @@ class RegisterApplication {
           message: "Invalid register",
         }
       }
-
-      const response = await this._database.post(req.body, this._path)
+      const passwordHash = hashSync(password, 3)
+      const response = await this._database.post(
+        {
+          ...req.body,
+          password: passwordHash,
+        },
+        this._path
+      )
       return response
     } catch (error) {
       this._logger.info(`RegisterApplication - Error execute ${error.message}`)

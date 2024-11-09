@@ -24,7 +24,7 @@ import Login from "./domain/login"
 import RegisterApplication from "./2_application/registerApplication"
 import RegisterController from "./1_drivers/register/RegisterController"
 import LoggerPinoAdapter from "./3_resources/adapters/LoggerPinoAdapter"
-
+import { hashSync } from "bcrypt"
 class HttpClientMemory implements IHttpClient {
   foods: any
 
@@ -164,6 +164,7 @@ describe("Login", () => {
   beforeAll(() => {
     const login = new Login()
     tokenMock = login.generateToken("teste@teste.com")
+    const password = hashSync("password", 3)
     httpClient = {
       get: async (): Promise<ILoginResponse> => {
         return {
@@ -173,7 +174,7 @@ describe("Login", () => {
           data: [
             {
               email: "teste@teste.com",
-              password: "password",
+              password,
             },
           ],
         }
