@@ -14,7 +14,7 @@ class LoginApplication {
 
   async execute(req: any): Promise<ILoginResponse> {
     try {
-      this._logger.info(`LoginApplication - execute ${req.body}`)
+      this._logger.info("LoginApplication - execute")
       const { email, password } = req.body
       const login = new Login()
       if (login.isInValid(req)?.message?.length > 0) {

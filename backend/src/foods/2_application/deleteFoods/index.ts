@@ -11,7 +11,7 @@ class DeleteFoodsApplication {
 
   async execute(req: any): Promise<IDeleteResponse> {
     try {
-      this._logger.info(`DeleteFoodsApplication - execute ${req.query}`)
+      this._logger.info(`DeleteFoodsApplication - execute`)
       const { query } = req
       const { id } = query
       const deleteFood = new DeleteFood(id)

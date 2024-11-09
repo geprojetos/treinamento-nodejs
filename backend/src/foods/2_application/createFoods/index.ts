@@ -11,7 +11,7 @@ class CreateFoodsApplication {
 
   async execute(req: any): Promise<any> {
     try {
-      this._logger.info(`CreateFoodsApplication - execute ${req.body}`)
+      this._logger.info(`CreateFoodsApplication - execute`)
       const { body } = req
       const { name, price, category } = body
       const food = new CreateFood(name, price, category)
