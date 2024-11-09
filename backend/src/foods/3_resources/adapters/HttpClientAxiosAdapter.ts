@@ -44,7 +44,6 @@ class HttpClientAxiosAdapter implements IHttpClient {
           method: request.method,
           params: request.params,
           body: request.data,
-          query: request.transformRequest,
         }
         this._logger.info({ Request: logs })
         return request

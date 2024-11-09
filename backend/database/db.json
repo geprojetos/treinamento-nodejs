@@ -54,7 +54,7 @@
   "users": [
     {
       "email": "teste@teste.com",
-      "password": "password",
+      "password": "$2b$04$cx7IoM7kEADMaBLXj5SeoenrgGe81Sjtp5MbLJVYxwHaMI6Q902LS",
       "id": 1
     }
   ]
