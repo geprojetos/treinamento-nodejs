@@ -17,6 +17,7 @@
     "test:todo-actions": "vitest src/todo-actions/index.spec.ts",
     "test:example": "vitest src/example/index.spec.ts",
     "test:foods": "vitest src/foods/index.spec.ts",
+    "test:products": "set NODE_ENV=test && vitest src/products/product/test/integration/index.spec.ts",
     "dev:clean-arch-v1": "nodemon src/clean-arch-v1/index.ts",
     "dev:clean-arch-v2": "nodemon src/clean-arch-v2/index.ts",
     "dev:clean-arch-v3": "nodemon src/clean-arch-v3/index.ts",
@@ -25,6 +26,7 @@
     "dev:notification": "nodemon src/notification/index.ts",
     "dev:example": "nodemon src/example/1_drivers/index.ts",
     "dev:foods": "nodemon src/foods/1_drivers/index.ts",
+    "dev:products": "set NODE_ENV=development && nodemon src/products/index.ts",
     "dev:portsAndAdapters": "nodemon src/portsAndAdapters/1_drivers/index.ts",
     "db": "json-server --watch database/db.json",
     "db:users": "json-server --watch database/users.json"

@@ -57,5 +57,14 @@
       "password": "$2b$04$cx7IoM7kEADMaBLXj5SeoenrgGe81Sjtp5MbLJVYxwHaMI6Q902LS",
       "id": 1
     }
+  ],
+  "products": [
+    {
+      "id": "1439",
+      "name": "test 1",
+      "description": "test 1",
+      "price": 10.99,
+      "category": "test 1"
+    }
   ]
 }
