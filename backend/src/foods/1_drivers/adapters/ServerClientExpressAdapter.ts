@@ -31,17 +31,18 @@ class ServerClientExpressAdapter implements IServerClient {
     response: Response,
     next: NextFunction
   ) {
-    const token = request.headers["authorization"].split(" ")[1]
-    verify(token, config.secretToken, function (error, _decoded) {
-      if (config.isEnableTokenValidation && error) {
-        response.json({
-          status: "401",
-          message: "Invalid token",
-        })
-        return
-      }
-      next()
-    })
+    if (request.headers["authorization"]) {
+      const token = request.headers["authorization"].split(" ")[1]
+      verify(token, config.secretToken, function (error, _decoded) {
+        if (config.isEnableTokenValidation && error) {
+          response.json({
+            status: "401",
+            message: "Invalid token",
+          })
+        }
+      })
+    }
+    next()
   }
 
   delete(url: string, callback: (req: any, res: any) => Promise<any>): void {
