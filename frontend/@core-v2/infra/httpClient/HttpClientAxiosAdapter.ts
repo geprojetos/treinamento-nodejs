@@ -24,7 +24,7 @@ export default class HttpClientAxiosAdapter implements IHttpClient {
       const response = await axios.get(this._baseUrl)
       return {
         status: response.status,
-        data: response.data,
+        data: response.data.data,
       }
     } catch (error: any) {
       console.error("Error GET HttpClientAxiosAdapter", error.message)
@@ -36,7 +36,7 @@ export default class HttpClientAxiosAdapter implements IHttpClient {
       const response = await axios.post(this._baseUrl, input)
       return {
         status: response.status,
-        data: response.data,
+        data: response.data.data,
       }
     } catch (error: any) {
       console.error("Error POST HttpClientAxiosAdapter", error.message)
@@ -48,7 +48,7 @@ export default class HttpClientAxiosAdapter implements IHttpClient {
       const response = await axios.patch(`${this._baseUrl}/${input.id}`, input)
       return {
         status: response.status,
-        data: response.data,
+        data: response.data.data,
       }
     } catch (error: any) {
       console.error("Error PATCH HttpClientAxiosAdapter", error.message)
@@ -60,7 +60,7 @@ export default class HttpClientAxiosAdapter implements IHttpClient {
       const response = await axios.delete(`${this._baseUrl}/${input}`)
       return {
         status: response.status,
-        data: response.data,
+        data: response.data.data,
       }
     } catch (error: any) {
       console.error("Error DELETE HttpClientAxiosAdapter", error.message)
